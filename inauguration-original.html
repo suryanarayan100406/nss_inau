@@ -7,848 +7,754 @@
 <meta name="theme-color" content="#070C09">
 <title>The Unveiling — NSS IIIT Naya Raipur</title>
 <meta name="description" content="Inauguration ceremony of the National Service Scheme website, IIIT Naya Raipur.">
+
+<!--
+  ===========================================================================
+  THE UNVEILING — ceremony page for the NSS IIIT Naya Raipur website.
+
+  Built to be projected. One ceremony: the director cuts the ribbon, the
+  stage lifts, and the finished site is revealed beneath with a wax seal.
+
+  Motion vocabulary — all bundled, no CDN, works with no network:
+    · masked line rise + 3D blind flip       (title arrival)
+    · travelling gold-leaf shimmer           (per-character gradient phase)
+    · clean panel lift                       (the stage leaving)
+    · clip-path iris from the cut point      (the live scene opening)
+    · spring-damped particle burst           (marigold petals + streamers)
+
+  Anyone may open this page and play the animation. Only an NSS admin session
+  can commit it — the cut is a POST to /api/ceremony/cut, and the server checks
+  the session, the CSRF token and the site's state before it records anything.
+  A visitor without that session gets the full animation and a banner saying it
+  was a preview; no state changes. See inauguration/README.md.
+  ===========================================================================
+-->
+
 <script>document.documentElement.className += ' js';</script>
 
 <style>
-/* ---------- fonts ---------- */
-@font-face{font-family:'Fraunces';font-style:normal;font-weight:100 900;font-display:block;src:url('assets/fonts/fraunces-latin-wght-normal.woff2') format('woff2');}
-@font-face{font-family:'Fraunces';font-style:italic;font-weight:100 900;font-display:block;src:url('assets/fonts/fraunces-latin-wght-italic.woff2') format('woff2');}
-@font-face{font-family:'Work Sans';font-style:normal;font-weight:100 900;font-display:block;src:url('assets/fonts/work-sans-latin-wght-normal.woff2') format('woff2');}
+/* ---------- fonts (bundled — works with no internet) ---------- */
+@font-face{font-family:'Fraunces';font-style:normal;font-weight:100 900;font-display:block;
+  src:url('assets/fonts/fraunces-latin-wght-normal.woff2') format('woff2');}
+@font-face{font-family:'Fraunces';font-style:italic;font-weight:100 900;font-display:block;
+  src:url('assets/fonts/fraunces-latin-wght-italic.woff2') format('woff2');}
+@font-face{font-family:'Work Sans';font-style:normal;font-weight:100 900;font-display:block;
+  src:url('assets/fonts/work-sans-latin-wght-normal.woff2') format('woff2');}
 
-:root {
-  --ink: #070C09;
-  --ink-2: #0B120E;
-  --emerald-deep: #08160E;
-  --marigold: #E8A63C;
-  --marigold-lit: #FBDC9E;
-  --gold-glow: #FCE29F;
-  --marigold-deep: #B8801F;
-  --gold-dark: #8A5A12;
-  --ruby: #D91E47;
-  --ruby-lit: #FF6584;
-  --ruby-deep: #8A0E28;
-  --bone: #F7F4EA;
-  --bone-dim: rgba(247,244,234,.75);
-  --bone-faint: rgba(247,244,234,.45);
-  --hair: rgba(247,244,234,.14);
-  --gold-hair: rgba(232,166,60,.45);
-  --font-display: 'Fraunces','Iowan Old Style','Palatino Linotype',Georgia,serif;
-  --font-body: 'Work Sans','Segoe UI',Helvetica,Arial,sans-serif;
-  --ease: cubic-bezier(.22,1,.36,1);
-  --gap: clamp(4px, .6vh, 10px);
-  --mouseX: 0px;
-  --mouseY: 0px;
+:root{
+  --ink:#070C09;
+  --ink-2:#0B120E;
+  --marigold:#E8A63C;
+  --marigold-lit:#FBDC9E;
+  --marigold-deep:#B8801F;
+  --rust:#C04A2E;
+  --rust-lit:#E8764F;
+  --rust-deep:#7A2A17;
+  --bone:#F7F4EA;
+  --bone-dim:rgba(247,244,234,.70);
+  --bone-faint:rgba(247,244,234,.42);
+  --hair:rgba(247,244,234,.14);
+  --gold-hair:rgba(232,166,60,.42);
+  --font-display:'Fraunces','Iowan Old Style','Palatino Linotype',Georgia,serif;
+  --font-body:'Work Sans','Segoe UI',Helvetica,Arial,sans-serif;
+  --ease:cubic-bezier(.22,1,.36,1);
+  --edge:clamp(14px,1.8vw,26px);
+  /* The vertical rhythm. Every gap and type size below is capped by viewport
+     HEIGHT as well as width. That is the load-bearing difference from the
+     previous version, which sized by width only and overflowed a projector. */
+  --gap:clamp(3px,.36vh,7px);
 }
 
-* { box-sizing: border-box; margin: 0; padding: 0; }
-html, body { height: 100%; }
-body {
-  background: var(--ink);
-  color: var(--bone);
-  font-family: var(--font-body);
-  font-size: 16px;
-  line-height: 1.6;
-  overflow: hidden;
-  -webkit-font-smoothing: antialiased;
-  text-rendering: optimizeLegibility;
+*{box-sizing:border-box;margin:0;padding:0;}
+html,body{height:100%;}
+body{
+  background:var(--ink);color:var(--bone);
+  font-family:var(--font-body);font-size:16px;line-height:1.6;
+  overflow:hidden;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
 }
-button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
-::selection { background: var(--marigold); color: var(--ink); }
-:focus-visible { outline: 2px solid var(--marigold); outline-offset: 4px; border-radius: 3px; }
-.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap; }
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;}
+::selection{background:var(--marigold);color:var(--ink);}
+:focus-visible{outline:2px solid var(--marigold);outline-offset:4px;border-radius:3px;}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;}
 
 /* ==========================================================================
-   THE LIVE SCENE (REVEAL) - Preserved exactly as requested
+   THE LIVE SCENE — the light one. Cream paper, ink-green type, a white browser
+   frame, and the wax seal overhanging its corner. The grid is kept from the
+   dark pass (it is what stops the composition overflowing a projector), but
+   every colour is back to the version that read as a printed invitation.
    ========================================================================== */
-#live {
-  position: fixed; inset: 0; z-index: 1;
-  display: grid; grid-template-rows: auto 1fr auto;
-  padding: clamp(16px,3.4vh,44px) clamp(16px,3.4vw,48px);
-  gap: clamp(12px,2.4vh,28px);
+#live{
+  position:fixed;inset:0;z-index:1;
+  display:grid;grid-template-rows:auto 1fr auto;
+  padding:clamp(16px,3.4vh,44px) clamp(16px,3.4vw,48px);
+  gap:clamp(12px,2.4vh,28px);
   background:
     radial-gradient(ellipse 70% 50% at 50% 0%, rgba(232,166,60,.16), transparent 62%),
     radial-gradient(ellipse 90% 60% at 50% 108%, rgba(182,67,42,.14), transparent 60%),
     #F1ECDC;
-  color: #1C2A1E;
-  opacity: 0; visibility: hidden;
+  color:#1C2A1E;
+  opacity:0;visibility:hidden;   /* keeps its "Enter the website" link untabbable */
 }
-#live.on { opacity: 1; visibility: visible; }
+#live.on{opacity:1;visibility:visible;}
 
-.live-halo {
-  position: absolute; left: 50%; top: 50%; width: 130vmax; height: 130vmax;
-  transform: translate(-50%,-50%) scale(.2); opacity: 0; pointer-events: none;
-  background: radial-gradient(circle,rgba(232,166,60,.16) 0%,rgba(232,166,60,.05) 30%,transparent 58%);
-  -webkit-mask-image: radial-gradient(circle,#000 18%,transparent 62%);
-  mask-image: radial-gradient(circle,#000 18%,transparent 62%);
-}
-.live-grain {
-  position: absolute; inset: -50%; opacity: .035; pointer-events: none;
-  animation: grainShift .6s steps(3) infinite;
-  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='24 0 0 0 -12  24 0 0 0 -12  24 0 0 0 -12  0 0 0 0 .7'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
-  background-size: 200px 200px;
-}
+.live-halo{position:absolute;left:50%;top:50%;width:130vmax;height:130vmax;
+  transform:translate(-50%,-50%) scale(.2);opacity:0;pointer-events:none;
+  /* gentler than on the dark pass — on cream a .22 bloom bleaches the paper */
+  background:radial-gradient(circle,rgba(232,166,60,.16) 0%,rgba(232,166,60,.05) 30%,transparent 58%);
+  -webkit-mask-image:radial-gradient(circle,#000 18%,transparent 62%);
+  mask-image:radial-gradient(circle,#000 18%,transparent 62%);}
+.live-grain{position:absolute;inset:-50%;opacity:.035;pointer-events:none;
+  animation:grainShift .6s steps(3) infinite;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='24 0 0 0 -12  24 0 0 0 -12  24 0 0 0 -12  0 0 0 0 .7'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  background-size:200px 200px;}
 
-.live-head { position: relative; text-align: center; align-self: end; max-width: 900px; justify-self: center; }
-.live-flag {
-  display: inline-flex; align-items: center; gap: 9px;
-  font-size: clamp(.66rem,.84vw,.76rem); font-weight: 700; letter-spacing: .24em; text-transform: uppercase;
-  color: #1C2A1E; background: var(--marigold);
-  padding: 7px 16px; border-radius: 99px; margin-bottom: clamp(8px,1.4vh,16px);
-  box-shadow: 0 14px 30px -14px rgba(184,128,31,.9), inset 0 1px 0 rgba(255,255,255,.5);
+.live-head{position:relative;text-align:center;align-self:end;max-width:900px;justify-self:center;}
+.live-flag{
+  display:inline-flex;align-items:center;gap:9px;
+  font-size:clamp(.66rem,.84vw,.76rem);font-weight:700;letter-spacing:.24em;text-transform:uppercase;
+  color:#1C2A1E;background:var(--marigold);
+  padding:7px 16px;border-radius:99px;margin-bottom:clamp(8px,1.4vh,16px);
+  box-shadow:0 14px 30px -14px rgba(184,128,31,.9), inset 0 1px 0 rgba(255,255,255,.5);
 }
-.live-flag i { width: 7px; height: 7px; border-radius: 50%; background: #1C2A1E; animation: livePulse 1.9s ease-out infinite; }
-@keyframes livePulse { 0% { box-shadow: 0 0 0 0 rgba(28,42,30,.5); } 100% { box-shadow: 0 0 0 9px rgba(28,42,30,0); } }
-.live-head h2 {
-  font-family: var(--font-display); font-weight: 600; color: #1C2A1E;
-  font-size: clamp(2.1rem,min(5.1vw,6.2vh),3.9rem); line-height: 1.04; letter-spacing: -.022em;
+.live-flag i{width:7px;height:7px;border-radius:50%;background:#1C2A1E;animation:livePulse 1.9s ease-out infinite;}
+@keyframes livePulse{0%{box-shadow:0 0 0 0 rgba(28,42,30,.5);}100%{box-shadow:0 0 0 9px rgba(28,42,30,0);}}
+.live-head h2{
+  font-family:var(--font-display);font-weight:600;color:#1C2A1E;
+  font-size:clamp(2.1rem,min(5.1vw,6.2vh),3.9rem);line-height:1.04;letter-spacing:-.022em;
 }
-.live-head h2 em { font-style: italic; color: #C04A2E; }
-.live-head p { margin-top: 9px; color: #54624F; font-size: clamp(.92rem,1.1vw,1.14rem); }
-.live-head p b { color: #1C2A1E; font-weight: 600; }
+.live-head h2 em{font-style:italic;color:var(--rust);}
+.live-head p{margin-top:9px;color:#54624F;font-size:clamp(.92rem,1.1vw,1.14rem);}
+.live-head p b{color:#1C2A1E;font-weight:600;}
 
-.shot {
-  position: relative; align-self: center; justify-self: center;
-  width: min(1000px,92vw); height: min(100%,560px);
-  border-radius: 10px; display: flex; flex-direction: column; overflow: visible;
-  background: #fff; border: 1px solid rgba(28,42,30,.14);
-  box-shadow: 0 60px 110px -50px rgba(15,23,18,.6), 0 22px 44px -30px rgba(15,23,18,.4);
+/* ---- the framed preview ---- */
+.shot{
+  position:relative;align-self:center;justify-self:center;
+  width:min(1000px,92vw);
+  /* A definite height, not `max-height` + a flexible body. `flex:1` sets
+     flex-basis to 0%, so the body contributed NOTHING to the frame's
+     intrinsic height and the whole thing collapsed to the height of its
+     own title bar. A resolved height gives the body a line to fill.
+     The cap is generous (a laptop row is ~556px) so the frame shows the
+     whole hero of the page inside it, not a letterbox of it. */
+  height:min(100%,560px);
+  border-radius:10px;display:flex;flex-direction:column;
+  /* deliberately not clipped: the wax seal overhangs this frame on purpose */
+  overflow:visible;
+  background:#fff;border:1px solid rgba(28,42,30,.14);
+  box-shadow:0 60px 110px -50px rgba(15,23,18,.6), 0 22px 44px -30px rgba(15,23,18,.4);
 }
-.shot-bar {
-  display: flex; align-items: center; gap: 13px; flex-shrink: 0;
-  padding: 11px 15px; background: #F3F0E7; border-bottom: 1px solid rgba(28,42,30,.1);
-  border-radius: 9px 9px 0 0;
+.shot-bar{
+  display:flex;align-items:center;gap:13px;flex-shrink:0;
+  padding:11px 15px;background:#F3F0E7;border-bottom:1px solid rgba(28,42,30,.1);
+  border-radius:9px 9px 0 0;
 }
-.shot-dots { display: flex; gap: 7px; flex-shrink: 0; }
-.shot-dots i { width: 11px; height: 11px; border-radius: 50%; background: #D8D2C2; }
-.shot-dots i:first-child { background: var(--marigold); }
-.shot-url {
-  flex: 1; min-width: 0; background: #fff; border: 1px solid rgba(28,42,30,.1); border-radius: 99px;
-  padding: 6px 15px; font-size: .78rem; color: #54624F;
-  display: flex; align-items: center; gap: 8px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;
+.shot-dots{display:flex;gap:7px;flex-shrink:0;}
+.shot-dots i{width:11px;height:11px;border-radius:50%;background:#D8D2C2;}
+.shot-dots i:first-child{background:var(--marigold);}
+.shot-url{
+  flex:1;min-width:0;background:#fff;border:1px solid rgba(28,42,30,.1);border-radius:99px;
+  padding:6px 15px;font-size:.78rem;color:#54624F;
+  display:flex;align-items:center;gap:8px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;
 }
-.shot-url svg { width: 12px; height: 12px; flex-shrink: 0; stroke: #7FA56A; fill: none; stroke-width: 2; }
+.shot-url svg{width:12px;height:12px;flex-shrink:0;stroke:#7FA56A;fill:none;stroke-width:2;}
+.shot-body{flex:1 1 auto;min-height:0;position:relative;
+  background:var(--ink-2);overflow:hidden;border-radius:0 0 9px 9px;}
+/* The site inside is rendered at a true laptop viewport and scaled down into
+   this box by --fx (set in revealLive). Left at its natural size the iframe's
+   viewport would *be* the box — short and very wide — and the site's 100vh
+   hero would arrive cropped. --fh is the logical height: it tracks the box so
+   the viewport has the same shape as the frame, which puts the whole hero on
+   screen rather than the top two thirds of it. transform-origin is the
+   top-left because the box shows the top of the page, not its centre. */
+.shot-body iframe{position:absolute;left:0;top:0;border:0;display:block;
+  width:1440px;height:var(--fh,900px);background:var(--ink-2);
+  transform-origin:0 0;transform:scale(var(--fx,1));}
 
-/* Doodle callout above web browser */
-.shot-doodle {
-  position: absolute;
-  top: -46px;
-  right: clamp(16px, 6vw, 64px);
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  pointer-events: none;
-  z-index: 5;
-}
-.shot-doodle-text {
-  font-family: var(--font-display, Georgia, serif);
-  font-size: clamp(1.05rem, 1.4vw, 1.35rem);
-  font-style: italic;
-  font-weight: 600;
-  color: #C04A2E;
-  white-space: nowrap;
-  letter-spacing: .01em;
-  display: inline-flex;
-  align-items: baseline;
-}
-.shot-doodle-in {
-  position: relative;
-  display: inline-block;
-}
-.shot-doodle-sparks {
-  position: absolute;
-  top: -18px;
-  left: 50%;
-  transform: translateX(-36%);
-  width: 26px;
-  height: 20px;
-  overflow: visible;
-}
-.shot-doodle-arrow {
-  width: clamp(52px, 5.5vw, 68px);
-  height: clamp(48px, 5vw, 60px);
-  overflow: visible;
-  margin-top: 14px;
-  filter: drop-shadow(0 2px 5px rgba(28,42,30,.1));
-}
-@media (max-width: 680px) {
-  #live {
-    gap: clamp(16px, 2.8vh, 26px);
-  }
-  .live-head {
-    margin-bottom: 8px;
-  }
-  .live-head p {
-    font-size: .84rem;
-  }
-  .shot {
-    margin-top: 18px;
-  }
-  .shot-doodle {
-    top: -36px;
-    right: 14px;
-    gap: 6px;
-  }
-  .shot-doodle-text {
-    font-size: .86rem;
-  }
-  .shot-doodle-arrow {
-    width: 40px;
-    height: 36px;
-    margin-top: 8px;
-  }
-  .shot-doodle-sparks {
-    top: -15px;
-    width: 22px;
-    height: 18px;
-  }
-}
-
-.shot-body {
-  flex: 1 1 auto; min-height: 0; position: relative;
-  background: #0F1712; overflow: hidden; border-radius: 0 0 9px 9px;
-}
-.shot-body iframe {
-  position: absolute; left: 0; top: 0; border: 0; margin: 0; padding: 0; display: block;
-  width: var(--fw, 1440px); height: var(--fh, 620px); background: #0F1712;
-  transform-origin: 0 0; transform: scale(var(--fx,1));
-}
-.shot-mock {
-  position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: flex-end;
-  padding: clamp(16px,2.6vw,36px);
+/* Designed stand-in, until the real site is framed */
+.shot-mock{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;
+  padding:clamp(16px,2.6vw,36px);
   background:
     radial-gradient(ellipse 80% 60% at 76% 16%, rgba(232,166,60,.42), transparent 58%),
-    linear-gradient(158deg,#101A14 0%,#22392C 44%,#8A5A2B 100%);
-}
-.shot-mock .bar { height: 8px; border-radius: 99px; background: rgba(247,244,234,.2); margin-bottom: 10px; }
-.shot-mock .bar.t1 { width: 62%; height: clamp(14px,2vw,22px); background: rgba(247,244,234,.9); }
-.shot-mock .bar.t2 { width: 42%; height: clamp(14px,2vw,22px); background: rgba(247,244,234,.9); }
-.shot-mock .bar.t3 { width: 68%; background: rgba(247,244,234,.24); }
-.shot-mock .bar.t4 { width: 50%; background: rgba(247,244,234,.24); }
-.shot-mock .cta { width: 140px; height: 32px; border-radius: 3px; background: var(--marigold); margin-top: 8px; }
+    linear-gradient(158deg,#101A14 0%,#22392C 44%,#8A5A2B 100%);}
+.shot-mock .bar{height:8px;border-radius:99px;background:rgba(247,244,234,.2);margin-bottom:10px;}
+.shot-mock .bar.t1{width:62%;height:clamp(14px,2vw,22px);background:rgba(247,244,234,.9);}
+.shot-mock .bar.t2{width:42%;height:clamp(14px,2vw,22px);background:rgba(247,244,234,.9);}
+.shot-mock .bar.t3{width:68%;background:rgba(247,244,234,.24);}
+.shot-mock .bar.t4{width:50%;background:rgba(247,244,234,.24);}
+.shot-mock .cta{width:140px;height:32px;border-radius:3px;background:var(--marigold);margin-top:8px;}
 
-.seal {
-  position: absolute; z-index: 3; opacity: 0;
-  right: clamp(-18px,-1.6vw,-8px); bottom: clamp(-22px,-2vw,-10px);
-  width: clamp(84px,9vw,126px); height: clamp(84px,9vw,126px);
-  filter: drop-shadow(0 22px 34px rgba(15,23,18,.5));
+.seal{
+  position:absolute;z-index:3;opacity:0;
+  /* The overhang is done with negative offsets rather than a translate:
+     GSAP writes scale/rotate onto this element, and a CSS translate in the
+     same transform would be rewritten out from under it. */
+  right:clamp(-18px,-1.6vw,-8px);bottom:clamp(-22px,-2vw,-10px);
+  width:clamp(84px,9vw,126px);height:clamp(84px,9vw,126px);
+  filter:drop-shadow(0 22px 34px rgba(15,23,18,.5));
 }
-.seal svg { width: 100%; height: 100%; display: block; }
+.seal svg{width:100%;height:100%;display:block;}
 
-.live-foot {
-  position: relative; display: flex; align-items: center; gap: clamp(12px,2vw,24px);
-  flex-wrap: wrap; justify-content: center; align-self: start;
+.live-foot{position:relative;display:flex;align-items:center;gap:clamp(12px,2vw,24px);
+  flex-wrap:wrap;justify-content:center;align-self:start;}
+.enter{
+  display:inline-flex;align-items:center;gap:11px;
+  background:var(--ink-2);color:var(--bone);
+  padding:clamp(12px,1.5vh,16px) clamp(24px,2.6vw,34px);
+  border-radius:3px;font-weight:600;text-decoration:none;
+  box-shadow:0 20px 40px -20px rgba(15,23,18,.75), inset 0 1px 0 rgba(255,255,255,.1);
+  transition:transform .3s var(--ease), box-shadow .3s ease, filter .3s ease;
 }
-.enter{display:inline-flex;align-items:center;gap:11px;background:var(--ink-2);color:var(--bone);padding:clamp(12px,1.5vh,16px) clamp(24px,2.6vw,34px);border-radius:3px;font-weight:600;text-decoration:none;box-shadow:0 20px 40px -20px rgba(15,23,18,.75), inset 0 1px 0 rgba(255,255,255,.1);transition:transform .3s var(--ease), box-shadow .3s ease, filter .3s ease;}
-.enter:hover {
-  transform: translateY(-2px); filter: brightness(1.08);
-  box-shadow: 0 28px 54px -20px rgba(15,23,18,.85), inset 0 1px 0 rgba(255,255,255,.14);
-}
-.enter svg { width: 17px; height: 17px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.enter:hover{transform:translateY(-2px);filter:brightness(1.08);
+  box-shadow:0 28px 54px -20px rgba(15,23,18,.85), inset 0 1px 0 rgba(255,255,255,.14);}
+.enter svg{width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+/* Same trap as .preview-flag below: the rule above sets display, which beats the
+   browser's own [hidden]{display:none}, so an author rule has to say it again. */
 .enter[hidden]{display:none;}
-.live-note { font-size: clamp(.74rem,.9vw,.84rem); color: #6B7A66; max-width: 52ch; }
-.live-note:empty { display: none; }
-.live-note b { color: var(--marigold-deep); font-weight: 600; }
+.live-note{font-size:clamp(.74rem,.9vw,.84rem);color:#6B7A66;max-width:52ch;}
+/* an empty note must not stay a flex item — it would push the button off centre */
+.live-note:empty{display:none;}
+.live-note b{color:var(--marigold-deep);font-weight:600;}
 
 /* ==========================================================================
-   THE CEREMONIAL STAGE — Matching Reference Image
+   THE STAGE
+   --------------------------------------------------------------------------
+   A grid, not a centred flex column. `auto 1fr auto` reserves the HUD and the
+   foot their own rows, so the composition simply cannot collide with them —
+   which is exactly what went wrong when this was one tall centred stack.
    ========================================================================== */
-.stage {
-  position: fixed; inset: 0; z-index: 2;
-  background: var(--ink);
-  overflow: hidden;
-  display: flex; flex-direction: column; justify-content: space-between;
-  padding: clamp(12px, 2vh, 24px) clamp(16px, 2.8vw, 36px) clamp(12px, 1.8vh, 20px);
-  will-change: transform;
+.stage{
+  position:fixed;inset:0;z-index:2;background:var(--ink);overflow:hidden;
+  display:grid;grid-template-rows:auto 1fr auto;
+  padding:calc(var(--edge) + clamp(18px,2.5vh,28px)) var(--edge) calc(var(--edge) + clamp(13px,1.8vh,21px));
+  will-change:transform;
+}
+.stage-core{
+  grid-row:2;min-height:0;width:100%;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:var(--gap);text-align:center;
+  padding:clamp(1px,.15vh,4px) 0;
 }
 
-/* Atmosphere & Campus Background */
-.bg { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
-.bg-campus {
-  position: absolute; inset: 0;
-  background-color: #070C09;
-  background-image:
-    radial-gradient(circle at 50% 40%, rgba(24, 38, 32, 0.8) 0%, rgba(7, 12, 9, 0.95) 100%),
-    url('assets/images/inauguration_bg.jpg');
-  background-size: cover; background-position: center bottom;
-  filter: brightness(0.92) contrast(1.05);
-}
-.bg-vignette {
-  position: absolute; inset: 0;
+/* ---- atmosphere ---- */
+.bg{position:absolute;inset:0;overflow:hidden;pointer-events:none;}
+/* Deep, cool ground with one warm pool. The previous version stacked three
+   heavily-blurred blobs on screen blend and turned the whole frame olive. */
+.bg-base{position:absolute;inset:0;
   background:
-    radial-gradient(ellipse 85% 65% at 50% 32%, transparent 20%, rgba(4, 10, 6, 0.78) 85%),
-    linear-gradient(180deg, rgba(6, 14, 9, 0.55) 0%, transparent 40%, rgba(4, 10, 6, 0.85) 100%);
-}
-.bg-glow-spot {
-  position: absolute; left: 50%; top: 32%;
-  width: 90vw; height: 75vh;
-  transform: translate(-50%, -50%);
-  background: radial-gradient(ellipse 55% 45% at 50% 50%, rgba(232, 166, 60, 0.22) 0%, rgba(232, 166, 60, 0.05) 45%, transparent 70%);
-  pointer-events: none;
-}
-.grain {
-  position: absolute; inset: -50%; opacity: 0.028; pointer-events: none;
-  animation: grainShift .6s steps(3) infinite;
-  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='24 0 0 0 -12  24 0 0 0 -12  24 0 0 0 -12  0 0 0 0 .7'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
-  background-size: 200px 200px;
-}
-@keyframes grainShift { 0%{transform:translate(0,0);} 33%{transform:translate(-3%,2%);} 66%{transform:translate(2%,-3%);} 100%{transform:translate(0,0);} }
+    radial-gradient(ellipse 70% 46% at 50% 40%, rgba(232,166,60,.15) 0%, transparent 62%),
+    radial-gradient(ellipse 120% 80% at 50% -14%, #16241B 0%, #0A110D 46%, #060A07 100%);}
 
-/* Canvas Particles */
-#dust, #fireflies { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+.rays{
+  position:absolute;left:50%;top:34%;width:150vmax;height:150vmax;
+  transform:translate(-50%,-50%);opacity:.8;
+  background:conic-gradient(from 0deg,
+    transparent 0deg,  rgba(247,220,158,.17) 2.4deg, transparent 6deg,
+    transparent 40deg, rgba(247,220,158,.10) 43deg, transparent 48deg,
+    transparent 86deg, rgba(247,220,158,.15) 89deg, transparent 94deg,
+    transparent 140deg,rgba(247,220,158,.08) 143deg,transparent 148deg,
+    transparent 186deg,rgba(247,220,158,.14) 189deg,transparent 194deg,
+    transparent 240deg,rgba(247,220,158,.09) 243deg,transparent 248deg,
+    transparent 292deg,rgba(247,220,158,.15) 295deg,transparent 300deg,
+    transparent 340deg,rgba(247,220,158,.08) 343deg,transparent 348deg,
+    transparent 360deg);
+  -webkit-mask-image:radial-gradient(circle at 50% 50%, #000 0%, rgba(0,0,0,.45) 24%, transparent 46%);
+  mask-image:radial-gradient(circle at 50% 50%, #000 0%, rgba(0,0,0,.45) 24%, transparent 46%);
+  animation:turn 160s linear infinite;
+}
+@keyframes turn{to{transform:translate(-50%,-50%) rotate(360deg);}}
 
-/* Top HUD */
-.hud {
-  position: absolute; right: clamp(16px, 2.8vw, 36px); top: clamp(14px, 2.2vh, 26px);
-  display: flex; align-items: center; justify-content: flex-end;
-  gap: 12px; z-index: 10;
-}
-.tools { display: flex; gap: 10px; align-items: center; }
-.tool {
-  width: 36px; height: 36px; border-radius: 50%;
-  border: 1px solid rgba(232, 166, 60, 0.45);
-  background: rgba(9, 20, 14, 0.65);
-  color: var(--marigold-lit);
-  backdrop-filter: blur(8px);
-  display: inline-flex; align-items: center; justify-content: center;
-  transition: transform .25s var(--ease), border-color .25s ease, background .25s ease, box-shadow .25s ease;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
-}
-.tool:hover {
-  transform: scale(1.08); border-color: var(--marigold);
-  background: rgba(232, 166, 60, 0.18);
-  box-shadow: 0 0 16px rgba(232, 166, 60, 0.45);
-}
-.tool svg { width: 15px; height: 15px; stroke: currentColor; fill: none; stroke-width: 1.8; }
-.sound-bars { display: inline-flex; align-items: flex-end; gap: 3px; height: 14px; }
-.sound-bars span { width: 2.5px; background: var(--marigold); border-radius: 1px; animation: eqPulse 1s infinite alternate ease-in-out; }
-.sound-bars span:nth-child(1) { height: 6px; animation-delay: 0.1s; }
-.sound-bars span:nth-child(2) { height: 13px; animation-delay: 0.3s; }
-.sound-bars span:nth-child(3) { height: 9px; animation-delay: 0.2s; }
-@keyframes eqPulse { 0%{transform:scaleY(0.4);} 100%{transform:scaleY(1);} }
+/* two warm glows hugging the edges — held away from the centre so the middle
+   of the frame stays dark and the type keeps its contrast */
+.glow{position:absolute;border-radius:50%;filter:blur(80px);}
+.glow.a{width:46vw;height:46vw;left:-18vw;top:-16vh;opacity:.5;
+  background:radial-gradient(circle,rgba(232,166,60,.55),transparent 68%);
+  animation:drift 34s ease-in-out infinite;}
+.glow.b{width:44vw;height:44vw;right:-16vw;bottom:-18vh;opacity:.42;
+  background:radial-gradient(circle,rgba(192,74,46,.6),transparent 68%);
+  animation:drift 44s ease-in-out infinite reverse;}
+@keyframes drift{0%,100%{transform:translate(0,0) scale(1);}50%{transform:translate(5vw,4vh) scale(1.14);}}
 
-/* Core Vertical Layout - Shifted Higher Above */
-.stage-core {
-  flex: 1; width: 100%; min-height: 0;
-  display: flex; flex-direction: column; align-items: center;
-  justify-content: flex-start;
-  padding-top: clamp(2px, 0.8vh, 12px);
-  text-align: center;
-  position: relative; z-index: 5;
-}
+.beam{position:absolute;top:-30vh;width:min(38vw,520px);height:150vh;
+  background:linear-gradient(to bottom, rgba(247,220,158,.14), rgba(247,220,158,.03) 40%, transparent 70%);
+  filter:blur(26px);transform-origin:50% 0;}
+.beam.l{left:-6vw;animation:swayL 19s ease-in-out infinite;}
+.beam.r{right:-6vw;animation:swayR 23s ease-in-out infinite;}
+@keyframes swayL{0%,100%{transform:rotate(10deg);opacity:.75;}50%{transform:rotate(14deg);opacity:1;}}
+@keyframes swayR{0%,100%{transform:rotate(-10deg);opacity:.75;}50%{transform:rotate(-14deg);opacity:1;}}
 
-/* Institutional Marks & Header (High at Top) */
-.masthead {
-  display: flex; flex-direction: column; align-items: center; flex-shrink: 0;
-  margin-top: clamp(2px, 0.6vh, 10px);
-  margin-bottom: clamp(28px, 5.8vh, 64px);
-}
-.seals {
-  display: flex; align-items: center; justify-content: center;
-  gap: clamp(14px, 2vw, 22px); margin-bottom: clamp(7px, 1.1vh, 12px);
-}
-.seals img {
-  width: clamp(54px, min(6.8vw, 7.8vh), 78px);
-  height: clamp(54px, min(6.8vw, 7.8vh), 78px);
-  display: block; border-radius: 50%; object-fit: contain;
-  background: #FFF;
-  box-shadow: 0 8px 24px -6px rgba(0,0,0,.9), 0 0 0 1.5px rgba(232, 166, 60, 0.65), 0 0 18px rgba(232, 166, 60, 0.25);
-  transition: transform .3s var(--ease);
-}
-.seals img:hover { transform: scale(1.06); }
-.org {
-  font-size: clamp(.72rem, .95vw, .86rem); font-weight: 700;
-  letter-spacing: .28em; text-transform: uppercase; color: #FFF;
-  text-shadow: 0 2px 6px rgba(0,0,0,0.8);
-}
-.org-sub {
-  font-size: clamp(.68rem, .88vw, .78rem); font-weight: 700;
-  letter-spacing: .32em; text-transform: uppercase;
-  color: var(--marigold); margin-top: 3px;
-  display: flex; align-items: center; gap: 12px;
-}
-.org-sub::before, .org-sub::after {
-  content: ""; width: clamp(18px, 3vw, 42px); height: 1px;
-  background: linear-gradient(90deg, transparent, var(--marigold), transparent);
-}
+.sweep{position:absolute;top:-10%;bottom:-10%;width:40vw;
+  background:radial-gradient(ellipse 46% 54% at 50% 44%, rgba(255,240,212,.08), transparent 72%);
+  filter:blur(24px);animation:cross 26s ease-in-out infinite;}
+@keyframes cross{0%{left:-44vw;}50%{left:94vw;}100%{left:-44vw;}}
 
-/* Title Section ("The Unveiling" Shifted High) */
-.titleblock {
-  position: relative; display: flex; flex-direction: column; align-items: center;
-  flex-shrink: 0; margin-bottom: clamp(28px, 5.4vh, 62px);
-}
+.floorline{position:absolute;left:0;right:0;bottom:clamp(84px,14vh,150px);height:1px;
+  background:linear-gradient(to right,transparent,rgba(232,166,60,.22) 22%,rgba(247,220,158,.62) 50%,rgba(232,166,60,.22) 78%,transparent);
+  box-shadow:0 0 30px 3px rgba(232,166,60,.26);}
 
-/* Golden Light Ribbon Swirl (from reference image!) */
-.title-swirl {
-  position: absolute; left: 50%; top: 50%;
-  width: clamp(340px, 52vw, 680px); height: clamp(140px, 22vh, 260px);
-  transform: translate(-50%, -50%);
-  pointer-events: none; z-index: 1;
-}
-.title-swirl svg { width: 100%; height: 100%; overflow: visible; }
+#dust{position:absolute;inset:0;width:100%;height:100%;}
+.vig{position:absolute;inset:0;
+  background:radial-gradient(ellipse 88% 76% at 50% 46%, transparent 30%, rgba(3,6,4,.84) 100%);}
+.grain{position:absolute;inset:-60%;opacity:.05;animation:grainShift .6s steps(3) infinite;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='24 0 0 0 -12  24 0 0 0 -12  24 0 0 0 -12  0 0 0 0 .7'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  background-size:200px 200px;}
+@keyframes grainShift{0%{transform:translate(0,0);}33%{transform:translate(-3%,2%);}66%{transform:translate(2%,-3%);}100%{transform:translate(0,0);}}
 
-.kicker { display: none; } /* Clean layout matching reference */
-
-.title-script {
-  font-family: var(--font-display);
-  font-style: italic; font-weight: 400;
-  font-size: clamp(1.8rem, min(3.8vw, 4.8vh), 3.4rem);
-  line-height: 1; margin-bottom: clamp(-4px, -0.6vh, -8px);
-  color: #FFE6A3;
-  text-shadow: 0 0 22px rgba(232, 166, 60, 0.7), 0 2px 8px rgba(0,0,0,0.8);
-  position: relative; z-index: 3;
-}
-
-h1#title {
-  font-family: var(--font-display);
-  font-weight: 700; line-height: 1.05;
-  letter-spacing: -0.015em;
-  font-size: clamp(2.8rem, min(7.5vw, 8.8vh), 5.8rem);
-  position: relative; z-index: 3;
-}
-.ln3d { display: block; perspective: 900px; }
-h1 .ln { display: block; overflow: hidden; padding: .04em 0 .08em; }
-h1 .wd { display: inline-block; white-space: nowrap; }
-h1 .ch { display: inline-block; will-change: transform; }
-
-/* 3D Majestic Gold Lettering */
-.js h1 .ch {
-  background: linear-gradient(180deg,
-    #FFFFFF 0%,
-    #FFF4D2 18%,
-    #FCE08E 38%,
-    #E8A63C 60%,
-    #BF7F18 78%,
-    #784A04 100%
-  );
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  -webkit-text-fill-color: transparent;
-  filter: drop-shadow(0 4px 10px rgba(0,0,0,0.9)) drop-shadow(0 0 25px rgba(232, 166, 60, 0.45));
-}
-
-/* Lens flare glint on the title */
-.title-lensflare {
-  position: absolute; right: 18%; top: 38%;
-  width: 18px; height: 18px;
-  background: #FFF; border-radius: 50%;
-  box-shadow: 0 0 16px 6px #FFF, 0 0 35px 12px var(--marigold);
-  pointer-events: none; z-index: 4;
-  animation: flarePulse 3.5s ease-in-out infinite;
-}
-@keyframes flarePulse { 0%, 100% { opacity: 0.7; transform: scale(0.9); } 50% { opacity: 1; transform: scale(1.3); } }
-
-/* Dedication Plaque ("TO BE INAUGURATED BY") */
-.dedicate-wrap {
-  display: flex; flex-direction: column; align-items: center;
-  flex-shrink: 0; margin-bottom: clamp(26px, 4.8vh, 56px);
-}
-.dedicate-lbl {
-  font-size: clamp(.65rem, .82vw, .76rem); font-weight: 700;
-  letter-spacing: .28em; text-transform: uppercase;
-  color: var(--marigold-lit); margin-bottom: clamp(7px, 1.1vh, 13px);
-  text-shadow: 0 0 12px rgba(232, 166, 60, 0.6);
-}
-
-/* Plaque container with double gold chamfered border & lotus motifs */
-.dedicate {
-  position: relative; flex-shrink: 0;
-  padding: clamp(9px, 1.4vh, 15px) clamp(28px, 4vw, 56px);
-  background: rgba(8, 20, 13, 0.78);
-  backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
-  border: 1px solid rgba(232, 166, 60, 0.65);
-  box-shadow: 0 18px 40px -10px rgba(0,0,0,.85), inset 0 0 22px rgba(232, 166, 60, 0.08);
-  width: min(640px, 92vw);
-  border-radius: 4px;
-}
-/* Inner keyline */
-.dedicate::before {
-  content: ""; position: absolute; inset: 3px;
-  border: 1px solid rgba(232, 166, 60, 0.28);
-  border-radius: 2px; pointer-events: none;
-}
-/* Chamfered golden corner brackets */
-.dedicate-corner {
-  position: absolute; width: 8px; height: 8px;
-  border: 1.5px solid var(--marigold); pointer-events: none;
-}
-.dedicate-corner.tl { top: -1px; left: -1px; border-right: 0; border-bottom: 0; }
-.dedicate-corner.tr { top: -1px; right: -1px; border-left: 0; border-bottom: 0; }
-.dedicate-corner.bl { bottom: -1px; left: -1px; border-right: 0; border-top: 0; }
-.dedicate-corner.br { bottom: -1px; right: -1px; border-left: 0; border-top: 0; }
-
-/* Lotus crest icon on plaque */
-.plaque-lotus {
-  position: absolute; left: 50%; transform: translateX(-50%);
-  color: var(--marigold); font-size: 11px; line-height: 1;
-  background: rgba(8, 20, 13, 0.95); padding: 0 6px;
-}
-.plaque-lotus.top { top: -6px; }
-.plaque-lotus.bot { bottom: -6px; }
-
-.dedicate .who {
-  display: block;
-  font-family: var(--font-display); font-weight: 600;
-  font-size: clamp(1.3rem, min(2.7vw, 3.4vh), 2.05rem);
-  letter-spacing: -0.01em; color: #FFF;
-  text-shadow: 0 2px 10px rgba(0,0,0,.9), 0 0 22px rgba(255,255,255,0.3);
-}
-.dedicate .who [contenteditable] {
-  outline: none; border-bottom: 1px dashed transparent; transition: border-color .25s ease;
-}
-.dedicate .who [contenteditable]:hover, .dedicate .who [contenteditable]:focus {
-  border-bottom-color: var(--marigold);
-}
-.dedicate .role {
-  margin-top: 3px; color: var(--marigold);
-  font-size: clamp(.74rem, .92vw, .86rem);
-  font-weight: 700; letter-spacing: .22em; text-transform: uppercase;
-}
-.dedicate .lbl { display: none; } /* Handled cleanly by dedicate-lbl */
-.lede { display: none; }
+/* ---- the ceremonial frame ---- */
+.frame{position:absolute;inset:var(--edge);border:1px solid rgba(232,166,60,.10);pointer-events:none;z-index:4;}
+.frame i{position:absolute;width:clamp(14px,1.4vw,22px);height:clamp(14px,1.4vw,22px);border:1px solid var(--gold-hair);}
+.frame i:nth-child(1){top:-1px;left:-1px;border-right:0;border-bottom:0;transform-origin:0 0;}
+.frame i:nth-child(2){top:-1px;right:-1px;border-left:0;border-bottom:0;transform-origin:100% 0;}
+.frame i:nth-child(3){bottom:-1px;left:-1px;border-right:0;border-top:0;transform-origin:0 100%;}
+.frame i:nth-child(4){bottom:-1px;right:-1px;border-left:0;border-top:0;transform-origin:100% 100%;}
 
 /* ==========================================================================
-   THE CEREMONIAL RIBBON & BOW (Photorealistic Silk & Gold)
+   THE COMPOSITION
    ========================================================================== */
-.ribbon {
-  position: relative; align-self: stretch; width: 100vw;
-  margin-left: calc(50% - 50vw);
-  height: clamp(48px, min(6.6vw, 7.2vh), 66px);
-  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
-  margin-bottom: clamp(52px, 8.8vh, 102px);
+.masthead{display:flex;flex-direction:column;align-items:center;flex-shrink:0;}
+/* The two institutional marks, above the names they belong to. Both source
+   PNGs are round emblems drawn on their own light ground, so a bone disc
+   behind each one crops the square corner away cleanly and reads as a
+   printed badge rather than a pasted rectangle. */
+.seals{display:flex;align-items:center;justify-content:center;
+  gap:clamp(14px,2vw,28px);margin-bottom:clamp(5px,.8vh,10px);}
+.seals img{
+  width:clamp(60px,min(7.4vw,8.7vh),102px);height:clamp(60px,min(7.4vw,8.7vh),102px);
+  display:block;border-radius:50%;object-fit:contain;background:#F7F4EA;
+  box-shadow:0 12px 26px -12px rgba(0,0,0,.85), 0 0 0 1px rgba(232,166,60,.42);
 }
-.rib {
-  position: absolute; left: 0; right: 0; top: 50%;
-  height: clamp(38px, min(4.8vw, 5.2vh), 54px);
-  transform: translateY(-50%);
-}
+.org{font-size:clamp(.82rem,1.08vw,1rem);font-weight:700;letter-spacing:.3em;text-transform:uppercase;color:var(--bone);}
+.org-sub{font-size:clamp(.74rem,.97vw,.9rem);font-weight:600;letter-spacing:.32em;text-transform:uppercase;
+  color:var(--marigold);margin-top:4px;}
 
-/* Floor reflection of the ribbon on wet ground */
-.rib::before {
-  content: ""; position: absolute; left: 0; right: 0; top: 100%; height: 38px;
-  background: linear-gradient(180deg, rgba(217, 30, 71, 0.32) 0%, rgba(217, 30, 71, 0.08) 60%, transparent 100%);
-  filter: blur(5px); pointer-events: none; opacity: 0.85;
+/* The gap between the masthead and the title is set here rather than left to
+   --gap: the org names and the kicker are two different blocks, and at the
+   tight rhythm the composition runs on, the shared gap made the kicker look
+   like a third line of the masthead. */
+.titleblock{display:flex;flex-direction:column;align-items:center;flex-shrink:0;
+  margin-top:clamp(3px,.5vh,7px);}
+.kicker{
+  display:inline-flex;align-items:center;gap:12px;
+  font-size:clamp(.74rem,.97vw,.88rem);font-weight:700;letter-spacing:.34em;text-transform:uppercase;
+  color:var(--bone-faint);margin-bottom:clamp(4px,.7vh,9px);
 }
+.kicker::before,.kicker::after{content:"";width:clamp(20px,3.4vw,54px);height:1px;}
+.kicker::before{background:linear-gradient(to right,transparent,var(--gold-hair));}
+.kicker::after{background:linear-gradient(to left,transparent,var(--gold-hair));}
 
-/* Soft ambient rose-gold glow behind ribbon */
-.rib::after {
-  content: ""; position: absolute; inset: -34px 0;
-  background: radial-gradient(ellipse 65% 100% at 50% 50%, rgba(217, 30, 71, 0.35), rgba(232, 166, 60, 0.18), transparent 75%);
-  filter: blur(8px); pointer-events: none;
+h1{
+  font-family:var(--font-display);font-weight:600;color:var(--bone);
+  font-size:clamp(2.4rem,min(8.1vw,9.6vh),5.85rem);line-height:1.02;letter-spacing:-.03em;
 }
+/* Two nested spans, because one element cannot do both jobs: the outer one
+   carries the 3D blind flip, the inner one masks the character rise. A
+   rotating parent with overflow:hidden clips its own children mid-turn. */
+.ln3d{display:block;perspective:900px;}
+h1 .ln{display:block;overflow:hidden;padding:.04em 0 .1em;}
+h1 .ln3d:first-child .ln{font-style:italic;font-weight:500;
+  font-size:clamp(1.6rem,min(4.6vw,5.7vh),3.25rem);letter-spacing:-.01em;padding-bottom:.03em;}
+h1 .wd{display:inline-block;white-space:nowrap;}
+h1 .ch{display:inline-block;will-change:transform;}
 
-.half {
-  position: absolute; top: 0; bottom: 0; width: 50%; overflow: hidden;
-  box-shadow: 0 16px 36px -12px rgba(80, 4, 18, 0.85), 0 4px 16px rgba(0,0,0,0.6);
-  will-change: transform;
+/* Light travelling through gold leaf: one gradient per letter, each phase
+   offset from the last, so the highlight sweeps across the word. */
+.js h1 .ch{
+  background-image:linear-gradient(100deg,
+    #A9741B 0%, #E8A63C 12%, #FBDC9E 21%, #FFFDF6 28%,
+    #FBDC9E 35%, #E8A63C 48%, #B8801F 60%, #F3C877 74%, #FFFDF6 82%, #A9741B 100%);
+  background-size:250% 100%;
+  -webkit-background-clip:text;background-clip:text;
+  color:transparent;-webkit-text-fill-color:transparent;
+  animation:shimmer 7s linear infinite;
+  animation-delay:calc(var(--i,0) * -.1s);
 }
-.half-l { left: 0; transform-origin: 0% 50%; }
-.half-r { right: 0; transform-origin: 100% 50%; }
+@keyframes shimmer{0%{background-position:0% 0;}100%{background-position:100% 0;}}
 
-.sever {
-  position: absolute; left: 50%; top: -20%; bottom: -20%; width: 2px; margin-left: -1px;
-  opacity: 0; pointer-events: none;
-  background: linear-gradient(180deg, transparent, rgba(255, 246, 225, 0.95) 20%, #FFFFFF 50%, rgba(255, 246, 225, 0.95) 80%, transparent);
-  box-shadow: 0 0 20px 5px rgba(255, 236, 190, 0.95);
-}
+.lede{margin:0 auto;max-width:52ch;color:var(--bone-dim);
+  font-size:clamp(1rem,min(1.3vw,2.15vh),1.28rem);text-wrap:pretty;}
 
-/* Photorealistic Woven Crimson Silk Ribbon with Metallic Gold Piping */
-.cloth {
-  position: absolute; inset: 0; display: block;
-  background-color: #8E1B14;
-  background-image:
-    linear-gradient(180deg, rgba(232,166,60,0.95) 0%, rgba(232,166,60,0.6) 4%, transparent 5%, transparent 95%, rgba(232,166,60,0.6) 96%, rgba(232,166,60,0.95) 100%),
-    linear-gradient(180deg, #A82218 0%, #8E1B14 50%, #68100A 100%),
-    url('assets/images/ceremonial_ribbon.jpg');
-  background-size: 100% 100%, 100% 100%, 100% 100%;
-  background-position: center center;
-  background-repeat: no-repeat;
-  box-shadow: inset 0 2px 3px rgba(255,255,255,0.4), inset 0 -2px 4px rgba(0,0,0,0.45);
+/* ---- the dedication plaque ---- */
+.dedicate{
+  position:relative;flex-shrink:0;
+  padding:clamp(6px,.9vh,11px) clamp(20px,3.6vw,48px);
+  border:1px solid var(--hair);border-radius:2px;
+  background:linear-gradient(180deg,rgba(247,244,234,.045),rgba(247,244,234,0));
+  width:min(660px,100%);
 }
+.dedicate::before,.dedicate::after{content:"";position:absolute;left:16%;right:16%;height:1px;
+  background:linear-gradient(to right,transparent,var(--gold-hair),transparent);}
+.dedicate::before{top:-1px;}
+.dedicate::after{bottom:-1px;}
+.dedicate .lbl{font-size:clamp(.72rem,.92vw,.84rem);font-weight:700;letter-spacing:.32em;text-transform:uppercase;color:var(--bone-faint);}
+.dedicate .who{
+  display:inline-block;margin-top:5px;
+  font-family:var(--font-display);font-style:italic;font-weight:600;
+  font-size:clamp(1.36rem,min(3.1vw,3.75vh),2.2rem);letter-spacing:-.015em;color:var(--bone);
+  text-shadow:0 0 34px rgba(232,166,60,.4);
+}
+.dedicate .who [contenteditable]{outline:none;border-bottom:1px dashed transparent;transition:border-color .25s ease;}
+.dedicate .who [contenteditable]:hover,.dedicate .who [contenteditable]:focus{border-bottom-color:var(--gold-hair);}
+.dedicate .role{margin-top:3px;color:var(--marigold);font-size:clamp(.86rem,1.08vw,1.04rem);
+  font-weight:600;letter-spacing:.14em;text-transform:uppercase;}
 
-/* Specular Silk Sheen sweep overlay */
-.cloth::before {
-  content: ""; position: absolute; inset: 0;
-  background: linear-gradient(90deg,
-    rgba(255,255,255,0) 0%,
-    rgba(255,255,255,0.18) 26%,
-    rgba(255,255,255,0.38) 32%,
-    rgba(255,255,255,0.06) 42%,
-    rgba(0,0,0,0.1) 52%,
-    rgba(255,255,255,0.2) 74%,
-    rgba(255,255,255,0) 100%);
-  mix-blend-mode: overlay; pointer-events: none;
+/* ==========================================================================
+   THE RIBBON — full-bleed by being `align-self:stretch` on a full-width
+   column, NOT by 100vw with a negative margin. That trick measured against
+   the scrollbar and left the bow 124px off centre.
+   ========================================================================== */
+.ribbon{
+  position:relative;align-self:stretch;width:auto;
+  height:clamp(44px,min(6.5vw,7.1vh),68px);
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
 }
+.rib{position:absolute;left:0;right:0;top:50%;
+  height:clamp(34px,min(4.4vw,4.8vh),52px);transform:translateY(-50%);}
+.rib::after{content:"";position:absolute;inset:-30px 0;
+  background:radial-gradient(ellipse 58% 100% at 50% 50%, rgba(192,74,46,.34), transparent 72%);}
 
-.cloth::after {
-  content: ""; position: absolute; inset: 0;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5), inset 0 -1px 0 rgba(0, 0, 0, 0.35);
-  pointer-events: none;
-}
+.half{position:absolute;top:0;bottom:0;width:50%;overflow:hidden;
+  box-shadow:0 18px 44px -20px rgba(0,0,0,.95);will-change:transform;}
+.half-l{left:0;transform-origin:0% 50%;}
+.half-r{right:0;transform-origin:100% 50%;}
 
-/* Subtle moving glint across the silk */
-.gloss {
-  position: absolute; top: 0; bottom: 0; width: 25%; display: block; opacity: 0;
-  background: linear-gradient(100deg, transparent, rgba(255,255,255,.4) 45%, rgba(255,255,255,.75) 52%, transparent);
-  mix-blend-mode: overlay; filter: blur(4px); animation: gloss 6.5s ease-in-out infinite;
+/* The instant of the cut — a hairline of light exactly where the blades met.
+   Without it the two halves read as having drifted apart; with it they read as
+   severed. Taller than the ribbon so the flash overshoots the cloth edges. */
+.sever{position:absolute;left:50%;top:-18%;bottom:-18%;width:2px;margin-left:-1px;
+  opacity:0;pointer-events:none;
+  background:linear-gradient(180deg,transparent,rgba(255,246,225,.9) 20%,
+    #FFFFFF 50%,rgba(255,246,225,.9) 80%,transparent);
+  box-shadow:0 0 16px 4px rgba(255,236,190,.9);}
+
+/* Fabric, not plastic. One periodic fold pattern reads as corrugation — a
+   tube with ridges. Two overlaid patterns at different periods (264px and
+   366px) beat against each other, so no fold ever repeats on a visible
+   rhythm, and they drift at different rates as the cloth moves. */
+.cloth{position:absolute;inset:0;display:block;
+  background:
+    /* Satin sheen — the layer that actually says "silk". A broad soft highlight
+       riding above centre with a slow falloff either side. It sits first in the
+       stack and deliberately does NOT drift, so the light stays put while the
+       weave moves underneath it. */
+    linear-gradient(180deg,
+      rgba(255,246,230,0) 4%, rgba(255,246,230,.3) 27%,
+      rgba(255,246,230,.09) 47%, rgba(255,246,230,0) 63%),
+    /* The weave, at roughly half its former strength. At full contrast the two
+       periods read as corrugation — a ribbed metal tube — instead of cloth.
+       What sells fabric is low-contrast irregularity, not the stripes. */
+    repeating-linear-gradient(90deg,
+      rgba(255,238,214,.05) 0 2px, rgba(0,0,0,0) 2px 15px,
+      rgba(0,0,0,.055) 15px 29px, rgba(0,0,0,0) 29px 47px),
+    repeating-linear-gradient(90deg,
+      rgba(0,0,0,0) 0 19px, rgba(255,240,220,.04) 19px 23px,
+      rgba(0,0,0,.045) 23px 37px, rgba(0,0,0,0) 37px 64px),
+    linear-gradient(180deg,
+      #E8764F 0%, #D9563A 12%, var(--rust) 36%,
+      #A63C24 66%, var(--rust-deep) 89%, #5E2011 100%);
+  background-size:100% 100%, 264px 100%, 366px 100%, 100% 100%;
+  animation:clothFlow 13s linear infinite;
 }
-.half-r .gloss { animation-delay: 1.2s; }
-@keyframes gloss {
+@keyframes clothFlow{to{background-position:0 0, -264px 0, -366px 0, 0 0;}}
+.cloth::before,.cloth::after{content:"";position:absolute;left:0;right:0;}
+.cloth::before{top:0;height:38%;
+  background:linear-gradient(180deg,rgba(255,240,214,.14),rgba(255,240,214,0));}
+.cloth::after{bottom:0;height:44%;
+  background:linear-gradient(0deg,rgba(46,14,6,.42),rgba(46,14,6,0));}
+.braid{position:absolute;left:0;right:0;height:3px;display:block;
+  background:linear-gradient(90deg,
+    rgba(232,166,60,.15), rgba(247,220,158,.85) 12%, rgba(232,166,60,.4) 50%,
+    rgba(247,220,158,.85) 88%, rgba(232,166,60,.15));
+  background-size:240px 100%;animation:braid 5.5s linear infinite;}
+.braid.t{top:2px;}
+.braid.b{bottom:2px;opacity:.75;animation-direction:reverse;}
+@keyframes braid{to{background-position:-240px 0;}}
+
+.gloss{position:absolute;top:0;bottom:0;width:30%;display:block;opacity:0;
+  background:linear-gradient(100deg,transparent,rgba(255,246,228,.42) 44%,rgba(255,255,255,.7) 52%,transparent);
+  filter:blur(4px);animation:gloss 7s ease-in-out infinite;}
+.half-r .gloss{animation-delay:1.3s;}
+@keyframes gloss{
   0%{opacity:0;transform:translateX(-170%);}
   14%{opacity:.85;} 44%{opacity:.85;}
   58%{opacity:0;transform:translateX(380%);}
   100%{opacity:0;transform:translateX(380%);}
 }
 
-/* The Photorealistic Silk Bow */
-.bow {
-  --bw: clamp(152px, min(18vw, 19.5vh), 218px);
-  --bh: calc(var(--bw) * 1.19);
-  position: absolute; left: 50%; top: 50%;
-  width: var(--bw); height: var(--bh);
-  margin-left: calc(-1 * var(--bw) / 2);
-  margin-top: calc(-0.307 * var(--bh));
-  z-index: 3; pointer-events: none;
-  transform-origin: 50% 30.7%; will-change: transform;
+.bow{position:relative;z-index:3;width:clamp(96px,min(12vw,13vh),160px);pointer-events:none;
+  transform-origin:50% 24%;will-change:transform;}
+.bow-in{display:block;animation:bowSway 8s ease-in-out infinite;transform-origin:50% 20%;}
+@keyframes bowSway{0%,100%{transform:rotate(-1.1deg);}50%{transform:rotate(1.1deg);}}
+.bow svg{width:100%;height:auto;display:block;overflow:visible;}
+
+.scissors{position:absolute;left:50%;top:50%;z-index:4;
+  --sw:clamp(110px,min(14vw,15vh),180px);
+  width:var(--sw);height:var(--sw);margin-left:calc(var(--sw) / -2);margin-top:calc(var(--sw) / -2);
+  opacity:0;pointer-events:none;will-change:transform;}
+/* The pivot sits at the centre of the viewBox, and this box is centred on the
+   ribbon — so the blades close exactly where the cut is. A bright rim-glow was
+   tried here and read as a white smudge around a small shape; a tight dark
+   shadow reads as a real object resting on the cloth. */
+.scissors svg{width:100%;height:100%;display:block;overflow:visible;
+  filter:drop-shadow(0 10px 20px rgba(0,0,0,.75));}
+.trail{position:absolute;left:50%;top:50%;z-index:3;
+  --tw:clamp(64px,7.6vw,100px);
+  width:var(--tw);height:var(--tw);margin-left:calc(var(--tw) / -2);margin-top:calc(var(--tw) / -2);
+  border-radius:50%;opacity:0;pointer-events:none;filter:blur(14px);
+  background:radial-gradient(circle,rgba(255,238,200,.6),transparent 66%);}
+
+/* ---- the button ---- */
+.controls{display:flex;flex-direction:column;align-items:center;flex-shrink:0;}
+/* ---- the button ----
+   Rebuilt as an actual ribbon instead of a rounded rectangle. The shape is a
+   marigold band with a chevron notch cut into each end, the way a presentation
+   ribbon is cut, and the scissor sits in a small maroon medallion on it.
+
+   The band is a child element (.cut-ribbon) rather than the button's own
+   background for one reason: the notches need clip-path, and clip-path clips
+   box-shadow along with everything else, so the glow has to be a
+   filter:drop-shadow() on the clipped element instead. A filter on the button
+   itself was the obvious alternative and is wrong — it would drop a gold shadow
+   off the label's letterforms too.
+
+   Height is unchanged. The medallion is sized to sit inside the label's line
+   box, so nothing new is added to the stage's fixed vertical budget. */
+.cut{
+  position:relative;display:inline-flex;align-items:center;gap:14px;
+  padding:clamp(15px,2.2vh,23px) clamp(46px,5.6vw,78px);
+  border:0;background:none;border-radius:0;cursor:pointer;
+  font-weight:600;font-size:clamp(1.1rem,min(1.45vw,2.4vh),1.36rem);letter-spacing:.02em;
+  color:#2A1B03;
+  transition:transform .3s var(--ease);
 }
-.bow-in {
-  display: block; width: 100%; height: 100%;
-  animation: bowSway 6.5s ease-in-out infinite;
-  transform-origin: 50% 30.7%;
+.cut:hover{transform:translateY(-3px);}
+.cut:active{transform:translateY(0) scale(.985);}
+.cut[disabled]{opacity:.5;pointer-events:none;}
+/* This has to come before .cut-ribbon. Both are one-class selectors, so the
+   ribbon's position:absolute only beats this position:relative by appearing
+   later in the sheet — placed after it, the ribbon collapses to a zero-size
+   relative box and the button loses its background entirely. */
+.cut > *{position:relative;z-index:1;}
+
+.cut-ribbon{position:absolute;inset:0;z-index:0;pointer-events:none;
+  --notch:clamp(11px,1.15vw,16px);
+  clip-path:polygon(0 50%, var(--notch) 0, calc(100% - var(--notch)) 0, 100% 50%,
+                    calc(100% - var(--notch)) 100%, var(--notch) 100%);
+  background:linear-gradient(180deg,var(--marigold-lit),var(--marigold) 46%,var(--marigold-deep));
+  animation:cutGlow 4.2s ease-in-out infinite;}
+@keyframes cutGlow{
+  0%,100%{filter:drop-shadow(0 22px 36px rgba(232,166,60,.5));}
+  50%    {filter:drop-shadow(0 32px 54px rgba(232,166,60,.8));}
 }
-@keyframes bowSway {
-  0%, 100% { transform: rotate(-1.2deg); }
-  50% { transform: rotate(1.2deg); }
-}
-.bow-img {
-  width: 100%; height: 100%; display: block;
-  object-fit: contain; pointer-events: none;
-  filter: drop-shadow(0 14px 22px rgba(0,0,0,0.75)) drop-shadow(0 4px 8px rgba(100,5,20,0.5));
-}
+/* The keyline is the same notched shape inset a few pixels, so the hairline
+   turns the corners with the ribbon instead of stopping short of the cut ends. */
+.cut-ribbon::before{content:"";position:absolute;inset:3px;
+  clip-path:polygon(0 50%, var(--notch) 0, calc(100% - var(--notch)) 0, 100% 50%,
+                    calc(100% - var(--notch)) 100%, var(--notch) 100%);
+  border:1px solid rgba(255,247,226,.55);}
+/* Specular sweep. The parent's clip-path clips this for free, which is why the
+   button no longer carries overflow:hidden. */
+.cut-ribbon::after{content:"";position:absolute;top:0;bottom:0;width:38%;
+  background:linear-gradient(100deg,transparent,rgba(255,255,255,.72) 50%,transparent);
+  animation:sheen 4.6s ease-in-out infinite;}
+@keyframes sheen{0%{transform:translateX(-260%);}55%{transform:translateX(360%);}100%{transform:translateX(360%);}}
+
+/* Scissor medallion — deep maroon disc with a gold rim and gold blades, so the
+   icon reads as an object resting on the ribbon rather than a glyph printed
+   beside the words. It rotates open on hover. */
+.cut-ico{display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;
+  width:clamp(26px,2.6vh,30px);height:clamp(26px,2.6vh,30px);border-radius:50%;
+  background:radial-gradient(circle at 38% 30%, #7E2A22, #4E1712 72%);
+  box-shadow:inset 0 0 0 1.5px rgba(255,226,164,.75), 0 3px 8px -2px rgba(60,20,10,.6);}
+.cut-ico svg{display:block;width:56%;height:56%;fill:none;stroke:#FFE6B4;stroke-width:1.9;
+  stroke-linecap:round;stroke-linejoin:round;transition:transform .45s var(--ease);}
+.cut:hover .cut-ico svg{transform:rotate(-16deg) scale(1.06);}
+
+/* ---- HUD and foot (grid rows, so nothing can overlap them) ---- */
+.hud{grid-row:1;display:flex;align-items:center;justify-content:space-between;gap:12px;z-index:6;}
+/* The stage carries no operator chrome except the one line that matters: the
+   chip appears only for a session that can actually commit the cut. Everyone
+   else gets the preview banner at the top of the page instead, which says the
+   same thing in words a projector audience can read. */
+.status, .status.armed{display:none !important;}
+@keyframes ping{0%{box-shadow:0 0 0 0 currentColor;}100%{box-shadow:0 0 0 9px transparent;}}
+
+.tools{display:flex;gap:8px;margin-left:auto;}
+.tool{width:38px;height:38px;border-radius:50%;border:1px solid var(--hair);color:var(--bone-faint);
+  display:inline-flex;align-items:center;justify-content:center;
+  transition:color .25s ease,border-color .25s ease,background .25s ease;}
+.tool:hover{color:var(--marigold);border-color:var(--gold-hair);background:rgba(232,166,60,.08);}
+.tool svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;}
+.tool.off{color:rgba(247,244,234,.22);}
+.tool.off svg{opacity:.5;}
+
+.foot{grid-row:3;display:flex;align-items:center;justify-content:space-between;gap:clamp(10px,2.6vw,36px);z-index:6;}
+.foot .side{font-size:clamp(.68rem,.86vw,.8rem);font-weight:600;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--bone-faint);white-space:nowrap;}
+
+.railwrap{position:relative;display:flex;justify-content:center;min-width:0;}
+.rail-track,.rail-fill{position:absolute;left:0;top:4px;height:1px;}
+.rail-track{right:0;background:var(--hair);}
+.rail-fill{width:0;background:linear-gradient(to right,var(--marigold),var(--marigold-lit));
+  box-shadow:0 0 10px rgba(232,166,60,.85);transition:width 1s var(--ease);}
+.rail{position:relative;list-style:none;display:flex;gap:clamp(10px,2.2vw,32px);flex-wrap:wrap;justify-content:center;}
+.rail li{position:relative;display:flex;align-items:center;gap:8px;padding-top:13px;
+  font-size:clamp(.66rem,.84vw,.78rem);font-weight:600;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--bone-faint);transition:color .6s ease;}
+.rail li::before{content:"";position:absolute;top:1px;left:0;width:7px;height:7px;border-radius:50%;
+  background:var(--ink);border:1px solid rgba(247,244,234,.3);transition:all .6s ease;}
+.rail li.done{color:rgba(166,220,144,.88);}
+.rail li.done::before{background:#A6DC90;border-color:#A6DC90;}
+.rail li.now{color:var(--marigold);}
+.rail li.now::before{background:var(--marigold);border-color:var(--marigold);
+  box-shadow:0 0 0 4px rgba(232,166,60,.16);}
 
 /* ==========================================================================
-   CEREMONIAL SCISSORS & COMET TRAIL (Targeted by GSAP)
+   THE REVEAL EFFECTS
    ========================================================================== */
-.scissors {
-  position: absolute; left: 50%; top: 50%; z-index: 20;
-  --sw: clamp(140px, min(18vw, 19vh), 220px);
-  width: var(--sw); height: var(--sw);
-  margin-left: calc(var(--sw) / -2); margin-top: calc(var(--sw) / -2);
-  opacity: 0; pointer-events: none; will-change: transform;
-}
-.scissors svg {
-  width: 100%; height: 100%; display: block; overflow: visible;
-  filter: drop-shadow(0 16px 30px rgba(0,0,0,0.9)) drop-shadow(0 0 20px rgba(232, 166, 60, 0.45));
-}
-.trail {
-  position: absolute; left: 50%; top: 50%; z-index: 15;
-  --tw: clamp(90px, 11vw, 150px);
-  width: var(--tw); height: var(--tw);
-  margin-left: calc(var(--tw) / -2); margin-top: calc(var(--tw) / -2);
-  border-radius: 50%; opacity: 0; pointer-events: none; filter: blur(16px);
-  background: radial-gradient(circle, rgba(255,245,210,0.9) 0%, rgba(232,166,60,0.55) 40%, transparent 70%);
-}
+#flash{position:fixed;inset:0;z-index:7;pointer-events:none;opacity:0;
+  background:radial-gradient(circle at 50% 52%, #FFFBF0 0%, rgba(232,166,60,.9) 26%, rgba(232,166,60,0) 62%);}
+#shock{position:fixed;inset:0;z-index:6;pointer-events:none;opacity:0;
+  background:radial-gradient(circle at 50% 52%, rgba(255,255,255,.95) 0%, rgba(255,255,255,0) 40%);}
+#ring{position:fixed;z-index:7;width:20px;height:20px;border-radius:50%;opacity:0;pointer-events:none;
+  border:2px solid rgba(255,244,222,.9);
+  box-shadow:0 0 46px rgba(232,166,60,.9), inset 0 0 32px rgba(232,166,60,.6);}
+#burst{position:fixed;z-index:7;width:24px;height:24px;border-radius:50%;opacity:0;pointer-events:none;
+  background:conic-gradient(from 0deg,
+    transparent 0deg,  rgba(255,246,228,.65) 1.6deg, transparent 5deg,
+    transparent 46deg, rgba(255,246,228,.42) 48deg,  transparent 52deg,
+    transparent 94deg, rgba(255,246,228,.58) 96deg, transparent 100deg,
+    transparent 141deg,rgba(255,246,228,.38) 143deg,transparent 147deg,
+    transparent 186deg,rgba(255,246,228,.52) 188deg,transparent 192deg,
+    transparent 232deg,rgba(255,246,228,.4) 234deg,transparent 238deg,
+    transparent 277deg,rgba(255,246,228,.58) 279deg,transparent 283deg,
+    transparent 322deg,rgba(255,246,228,.42) 324deg, transparent 328deg,
+    transparent 360deg);
+  -webkit-mask-image:radial-gradient(circle,transparent 6%,#000 16%,transparent 58%);
+  mask-image:radial-gradient(circle,transparent 6%,#000 16%,transparent 58%);}
+#petals{position:fixed;inset:0;z-index:8;pointer-events:none;}
 
+/* ---- already held ---- */
+.notice{
+  position:fixed;inset:0;z-index:60;display:none;
+  flex-direction:column;align-items:center;justify-content:center;text-align:center;
+  padding:clamp(24px,6vw,64px);gap:16px;
+  background:
+    radial-gradient(ellipse 70% 50% at 50% 30%, rgba(232,166,60,.14), transparent 62%),
+    linear-gradient(180deg,#0C1510,#070C09);
+}
+.notice.on{display:flex;}
+.notice h2{font-family:var(--font-display);font-weight:600;letter-spacing:-.02em;
+  font-size:clamp(1.5rem,min(3.4vw,4vh),2.6rem);line-height:1.1;}
+.notice p{color:var(--bone-dim);max-width:48ch;}
+.notice a{display:inline-flex;align-items:center;gap:10px;margin-top:8px;
+  background:linear-gradient(180deg,var(--marigold-lit),var(--marigold) 46%,var(--marigold-deep));
+  color:#2A1B03;text-decoration:none;font-weight:600;padding:14px 30px;border-radius:3px;
+  box-shadow:0 22px 46px -18px rgba(232,166,60,.95), inset 0 1px 0 rgba(255,255,255,.6);}
 
 /* ==========================================================================
-   THE GOLDEN CUT BUTTON (EXACT REFERENCE DESIGN)
+   THE PREVIEW FLAG
+   --------------------------------------------------------------------------
+   Anyone may open this page and play the whole ceremony. Only an admin session
+   can actually commit it, and the page must never let that difference be
+   guessed at — so when the server says this visitor cannot cut, a banner says
+   so, and it stays up.
+
+   It is deliberately outside .stage and outside #live. Both of those are torn
+   down or covered as the ceremony plays, and the one moment the label matters
+   most is the finished animation: a screenshot of the finale must not be
+   mistakable for the record of a real inauguration. It is not dismissable for
+   the same reason — a control that could be clicked away would eventually be
+   clicked away in front of an audience.
+
+   The two full-screen scenes are inset by its height while it is up, so it
+   never sits on top of the cut button, the rail, or the live reveal's own
+   masthead.
    ========================================================================== */
-.controls {
-  display: flex; flex-direction: column; align-items: center;
-  flex-shrink: 0;
-  margin-top: clamp(8px, 1.5vh, 20px);
-  margin-bottom: clamp(14px, 2.4vh, 34px);
-  position: relative; z-index: 5;
+:root{--flag-h:0px;}
+.preview-flag{
+  position:fixed;left:0;right:0;top:0;z-index:70;
+  display:flex;align-items:center;justify-content:center;gap:10px;
+  height:var(--flag-h);padding:0 clamp(12px,3vw,26px);
+  background:linear-gradient(180deg,#B8801F,#8E5F14);
+  color:#FFF6E4;text-align:center;
+  font-size:clamp(.66rem,.82vw,.78rem);font-weight:600;letter-spacing:.12em;text-transform:uppercase;
+  box-shadow:0 10px 26px -12px rgba(0,0,0,.8);
 }
-.cut {
-  position: relative; display: inline-flex; align-items: center; justify-content: space-between;
-  gap: 16px;
-  padding: clamp(10px, 1.5vh, 14px) clamp(24px, 3.2vw, 38px);
-  border: 0; background: none; cursor: pointer;
-  font-weight: 700; font-size: clamp(1rem, min(1.35vw, 2.1vh), 1.25rem);
-  letter-spacing: .02em; color: #1C2A1E;
-  transition: transform .3s var(--ease), filter .3s ease;
-}
-.cut:hover { transform: translateY(-3px) scale(1.02); filter: brightness(1.05); }
-.cut:active { transform: translateY(0) scale(.98); }
-.cut[disabled] { opacity: .5; pointer-events: none; }
-.cut > * { position: relative; z-index: 1; }
-
-/* Pill Shaped Golden Glowing Background */
-.cut-ribbon {
-  position: absolute; inset: 0; z-index: 0; pointer-events: none;
-  border-radius: 999px;
-  background: linear-gradient(180deg, #FFF0B8 0%, #F5C662 42%, #D49528 85%, #B37515 100%);
-  border: 1.5px solid rgba(255, 255, 255, 0.85);
-  box-shadow:
-    0 0 28px 4px rgba(245, 198, 98, 0.65),
-    0 12px 30px -8px rgba(0, 0, 0, 0.75),
-    inset 0 1.5px 2px #FFFFFF;
-  animation: cutBtnGlow 3.6s ease-in-out infinite;
-}
-@keyframes cutBtnGlow {
-  0%, 100% { box-shadow: 0 0 25px 2px rgba(245, 198, 98, 0.55), 0 12px 30px -8px rgba(0, 0, 0, 0.75), inset 0 1.5px 2px #FFF; }
-  50% { box-shadow: 0 0 38px 8px rgba(245, 198, 98, 0.85), 0 16px 36px -6px rgba(0, 0, 0, 0.85), inset 0 1.5px 3px #FFF; }
-}
-
-/* Inner Dotted Golden Keyline */
-.cut-ribbon::before {
-  content: ""; position: absolute; inset: 2.5px;
-  border-radius: 999px; border: 1px solid rgba(138, 90, 18, 0.35);
-}
-
-
-/* Scissor Medallion on Button Left */
-.cut-ico {
-  display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0;
-  width: clamp(32px, 3.4vh, 38px); height: clamp(32px, 3.4vh, 38px); border-radius: 50%;
-  background: radial-gradient(circle at 35% 30%, #2A3C2D, #111A13 75%);
-  border: 1px solid rgba(232, 166, 60, 0.65);
-  box-shadow: inset 0 1px 2px rgba(0,0,0,0.8), 0 2px 6px rgba(0,0,0,0.4);
-}
-.cut-ico svg {
-  display: block; width: 56%; height: 56%; fill: none;
-  stroke: #FFE29A; stroke-width: 2.2;
-  stroke-linecap: round; stroke-linejoin: round;
-  transition: transform .45s var(--ease);
-}
-.cut:hover .cut-ico svg { transform: rotate(-18deg) scale(1.1); }
-
-.cut-label {
-  font-family: var(--font-body); font-weight: 700;
-  color: #17241A; letter-spacing: 0.02em;
-}
-.cut-arrow {
-  display: inline-flex; align-items: center; justify-content: center;
-  color: #17241A; font-size: 1.25rem; font-weight: 700;
-  transition: transform .3s ease;
-}
-.cut:hover .cut-arrow { transform: translateX(4px); }
-
-/* Reflection Glow underneath button */
-.controls-reflection {
-  position: absolute; bottom: -28px; width: 65%; height: 26px;
-  background: radial-gradient(ellipse 60% 100% at 50% 0%, rgba(245, 198, 98, 0.45) 0%, transparent 75%);
-  filter: blur(6px); pointer-events: none;
-}
-
-/* ==========================================================================
-   THE BOTTOM CEREMONY STEPPER / RAIL (EXACT REFERENCE DESIGN)
-   ========================================================================== */
-.foot {
-  grid-row: 3; display: flex; align-items: center; justify-content: space-between;
-  gap: clamp(10px, 2vw, 32px); z-index: 6; min-height: 52px;
-}
-.foot .side {
-  font-size: clamp(.68rem, .84vw, .78rem); font-weight: 700;
-  letter-spacing: .22em; text-transform: uppercase;
-  color: var(--marigold-lit); white-space: nowrap;
-}
-
-.railwrap {
-  position: relative; display: flex; justify-content: center;
-  flex: 1; max-width: 820px; margin: 0 auto;
-}
-.rail-track, .rail-fill {
-  position: absolute; left: 0; top: 12px; height: 1.5px;
-}
-.rail-track { right: 0; background: rgba(232, 166, 60, 0.25); }
-.rail-fill {
-  width: 66%; background: linear-gradient(90deg, var(--marigold), #FFF0B8);
-  box-shadow: 0 0 10px rgba(232, 166, 60, 0.85); transition: width 1s var(--ease);
-}
-
-.rail {
-  position: relative; list-style: none;
-  display: flex; justify-content: space-between; width: 100%;
-}
-.rail li {
-  position: relative; display: flex; flex-direction: column; align-items: center;
-  gap: 6px; text-align: center; cursor: default;
-}
-.rail-icon-wrap {
-  width: 24px; height: 24px; border-radius: 50%;
-  background: #0B160F; border: 1.5px solid rgba(232, 166, 60, 0.35);
-  display: flex; align-items: center; justify-content: center;
-  color: var(--bone-faint); font-size: 11px;
-  position: relative; z-index: 2;
-  transition: all .5s ease;
-}
-.rail li.done .rail-icon-wrap {
-  background: var(--marigold); border-color: #FFF; color: #17241A;
-  box-shadow: 0 0 12px rgba(232, 166, 60, 0.7);
-}
-.rail li.now .rail-icon-wrap {
-  background: #0B160F; border-color: var(--marigold); color: var(--marigold);
-  box-shadow: 0 0 0 4px rgba(232, 166, 60, 0.25), 0 0 16px rgba(232, 166, 60, 0.6);
-}
-.rail-lbl {
-  font-size: clamp(.62rem, .78vw, .72rem); font-weight: 700;
-  letter-spacing: .16em; text-transform: uppercase;
-  color: var(--bone-faint); transition: color .5s ease;
-  white-space: nowrap;
-}
-.rail li.done .rail-lbl { color: var(--marigold-lit); }
-.rail li.now .rail-lbl { color: var(--marigold); text-shadow: 0 0 10px rgba(232,166,60,0.5); }
-
-/* Reveal effects */
-#flash { position: fixed; inset: 0; z-index: 7; pointer-events: none; opacity: 0; background: radial-gradient(circle at 50% 52%, #FFFBF0 0%, rgba(232,166,60,.9) 26%, rgba(232,166,60,0) 62%); }
-#shock { position: fixed; inset: 0; z-index: 6; pointer-events: none; opacity: 0; background: radial-gradient(circle at 50% 52%, rgba(255,255,255,.95) 0%, rgba(255,255,255,0) 40%); }
-#ring { position: fixed; z-index: 7; width: 20px; height: 20px; border-radius: 50%; opacity: 0; pointer-events: none; border: 2px solid rgba(255,244,222,.9); box-shadow: 0 0 46px rgba(232,166,60,.9), inset 0 0 32px rgba(232,166,60,.6); }
-#burst { position: fixed; z-index: 7; width: 24px; height: 24px; border-radius: 50%; opacity: 0; pointer-events: none; background: conic-gradient(from 0deg, transparent 0deg, rgba(255,246,228,.65) 1.6deg, transparent 5deg, transparent 46deg, rgba(255,246,228,.42) 48deg, transparent 52deg, transparent 94deg, rgba(255,246,228,.58) 96deg, transparent 100deg, transparent 141deg, rgba(255,246,228,.38) 143deg, transparent 147deg, transparent 186deg, rgba(255,246,228,.52) 188deg, transparent 192deg, transparent 232deg, rgba(255,246,228,.4) 234deg, transparent 238deg, transparent 277deg, rgba(255,246,228,.58) 279deg, transparent 283deg, transparent 322deg, rgba(255,246,228,.42) 324deg, transparent 328deg, transparent 360deg); -webkit-mask-image: radial-gradient(circle, transparent 6%, #000 16%, transparent 58%); mask-image: radial-gradient(circle, transparent 6%, #000 16%, transparent 58%); }
-#petals { position: fixed; inset: 0; z-index: 8; pointer-events: none; }
-
-/* Notice & preview flag */
-.notice { position: fixed; inset: 0; z-index: 60; display: none; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: clamp(24px,6vw,64px); gap: 16px; background: radial-gradient(ellipse 70% 50% at 50% 30%, rgba(232,166,60,.14), transparent 62%), linear-gradient(180deg,#0C1510,#070C09); }
-.notice.on { display: flex; }
-.notice h2 { font-family: var(--font-display); font-weight: 600; letter-spacing: -.02em; font-size: clamp(1.5rem,min(3.4vw,4vh),2.6rem); line-height: 1.1; }
-.notice p { color: var(--bone-dim); max-width: 48ch; }
-.notice a { display: inline-flex; align-items: center; gap: 10px; margin-top: 8px; background: linear-gradient(180deg,var(--marigold-lit),var(--marigold) 46%,var(--marigold-deep)); color: #2A1B03; text-decoration: none; font-weight: 600; padding: 14px 30px; border-radius: 3px; box-shadow: 0 22px 46px -18px rgba(232,166,60,.95), inset 0 1px 0 rgba(255,255,255,.6); }
-
-:root { --flag-h: 0px; }
-.preview-flag{position:fixed;left:0;right:0;top:0;z-index:70;display:flex;align-items:center;justify-content:center;gap:10px;height:var(--flag-h);padding:0 clamp(12px,3vw,26px);background:linear-gradient(180deg,#B8801F,#8E5F14);color:#FFF6E4;text-align:center;font-size:clamp(.66rem,.82vw,.78rem);font-weight:600;letter-spacing:.12em;text-transform:uppercase;box-shadow:0 10px 26px -12px rgba(0,0,0,.8);}
 .preview-flag[hidden]{display:none;}
-.preview-flag b { color: #FFF; font-weight: 700; }
-.preview-flag.done { background: linear-gradient(180deg,#2E5B39,#1E3D26); }
-body.previewing { --flag-h: clamp(34px,4.4vh,42px); }
-body.previewing .stage, body.previewing #live { top: var(--flag-h); }
+.preview-flag b{color:#FFF;font-weight:700;}
+.preview-flag.done{background:linear-gradient(180deg,#2E5B39,#1E3D26);}
 
-/* Responsive */
-@media (max-width: 820px) {
-  .foot { justify-content: center; }
-  .foot .side { display: none; }
-  .railwrap { max-width: 100%; }
-  .rail-lbl { font-size: .58rem; }
+body.previewing{--flag-h:clamp(34px,4.4vh,42px);}
+body.previewing .stage,
+body.previewing #live{top:var(--flag-h);}
+
+/* ==========================================================================
+   RESPONSIVE
+   ========================================================================== */
+@media (max-width:1100px){
+  .beam,.sweep{display:none;}
+  .shot{height:min(100%,500px);}
 }
-@media (max-height: 820px) {
-  #live {
-    padding: clamp(10px, 2vh, 22px) clamp(16px, 3vw, 36px);
-    gap: clamp(8px, 1.5vh, 16px);
-  }
-  .live-head { margin-bottom: 0; }
-  .live-head h2 { font-size: clamp(1.8rem, 4.2vh, 2.7rem); line-height: 1.03; }
-  .live-head p { margin-top: 4px; font-size: clamp(.82rem, 1vw, .95rem); }
-  .live-flag { padding: 5px 14px; margin-bottom: 6px; }
-  .shot { height: min(100%, 540px); min-height: 280px; }
+@media (max-width:820px){
+  .foot{justify-content:center;}
+  .foot .side{display:none;}
+  .rail-track,.rail-fill{display:none;}
+  .rail li{padding-top:0;}
+  .rail li::before{position:static;margin-right:6px;}
+  .lede{display:none;}
 }
-@media (max-height: 720px) {
-  .masthead .seals img { width: 50px; height: 50px; }
-  .title-script { font-size: 1.8rem; margin-bottom: -10px; }
+@media (max-height:720px){
+  .lede{display:none;}
+  .kicker{display:none;}
+}
+@media (max-height:600px){
+  .org-sub{display:none;}
+  .dedicate{padding:8px 16px;}
+  h1 .ln3d:first-child .ln{font-size:1.2rem;}
+}
+/* On a 720p-ish screen (a 1366x768 laptop, a small projector) the reveal's
+   own heading is what stands between the frame and the height it needs. Give
+   the frame the room: a shorter heading, a tighter flag, less outer padding.
+   The frame then shows the whole hero rather than all but its last lines. */
+@media (max-height:820px){
+  #live{gap:clamp(8px,1.5vh,16px);
+    padding:clamp(10px,2.2vh,26px) clamp(16px,3.4vw,48px);}
+  .live-flag{font-size:clamp(.56rem,.7vw,.62rem);padding:5px 12px;
+    margin-bottom:clamp(6px,1vh,11px);}
+  .live-head h2{font-size:clamp(1.45rem,min(3.8vw,4.6vh),2.7rem);}
+  .live-head p{margin-top:6px;font-size:clamp(.76rem,.94vw,.92rem);}
+}
+
+/* ==========================================================================
+   REDUCED MOTION — the ceremony still happens, it just does not travel
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce){
+  .rays,.glow,.beam,.sweep,.grain,.bow-in,.cloth,.braid,.gloss,
+  .cut-ribbon,.cut-ribbon::after,.live-flag i,.live-grain{animation:none;}
+  /* The ribbon's animation is what applies its glow, so switching it off would
+     leave the button flat — hold the resting shadow explicitly. */
+  .cut-ribbon{filter:drop-shadow(0 22px 36px rgba(232,166,60,.5));}
+  .cut-ico svg{transition:none;}
+  .rays{opacity:.45;}
+  .gloss{opacity:.2;}
+  .js h1 .ch{animation:none;color:var(--marigold);-webkit-text-fill-color:var(--marigold);background:none;}
 }
 </style>
 </head>
 <body>
 
+<!-- ===================== PREVIEW FLAG =====================
+     Filled in from the server's answer. Outside #live and .stage on purpose:
+     see the stylesheet note. -->
 <p class="preview-flag" id="previewFlag" role="status" aria-live="polite" hidden></p>
 
-<!-- ===================== THE LIVE SCENE (REVEAL) ===================== -->
+<!-- ===================== THE LIVE SCENE ===================== -->
 <section id="live" aria-hidden="true">
   <div class="live-halo" id="halo" aria-hidden="true"></div>
   <div class="live-grain" aria-hidden="true"></div>
 
   <div class="live-head">
     <span class="live-flag" id="liveChip"><i></i> Live</span>
-    <h2 id="liveHead">The NSS website<br>is now <em>live</em>.<span class="sparkle"></span></h2>
+    <h2 id="liveHead">The NSS website<br>is now <em>live</em>.</h2>
     <p id="liveCred">
       <span id="liveCredLive">Inaugurated by <b id="liveBy">the Director</b> · <span id="liveDate"></span></span>
       <span id="liveCredPreview" hidden>Not inaugurated yet · this was a local playback</span>
@@ -856,26 +762,11 @@ body.previewing .stage, body.previewing #live { top: var(--flag-h); }
   </div>
 
   <div class="shot" id="shot">
-    <div class="shot-doodle" aria-hidden="true">
-      <span class="shot-doodle-text">
-        Live at nss.iiitnr.ac.<span class="shot-doodle-in">in
-          <svg class="shot-doodle-sparks" viewBox="0 0 28 22" fill="none">
-            <path d="M 6 18 L 3 5" stroke="#E8A63C" stroke-width="2.8" stroke-linecap="round"/>
-            <path d="M 14 19 L 19 6" stroke="#E8A63C" stroke-width="2.8" stroke-linecap="round"/>
-            <path d="M 21 20 L 28 16" stroke="#E8A63C" stroke-width="2.8" stroke-linecap="round"/>
-          </svg>
-        </span>
-      </span>
-      <svg class="shot-doodle-arrow" viewBox="0 0 88 78" fill="none">
-        <path d="M 10 18 C 50 6 86 18 80 46 C 74 68 46 68 16 56" stroke="#E8A63C" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>
-        <path d="M 30 46 L 16 56 L 25 70" stroke="#E8A63C" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-    </div>
     <div class="shot-bar">
       <span class="shot-dots"><i></i><i></i><i></i></span>
       <span class="shot-url">
         <svg viewBox="0 0 24 24"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
-        <span id="shotUrl">nss.iiitnr.ac.in</span>
+        <span id="shotUrl">nss · iiit naya raipur</span>
       </span>
     </div>
     <div class="shot-body" id="shotBody">
@@ -923,30 +814,30 @@ body.previewing .stage, body.previewing #live { top: var(--flag-h); }
   </div>
 </section>
 
-<!-- ===================== THE CEREMONIAL STAGE ===================== -->
+<!-- ===================== THE STAGE ===================== -->
 <div class="stage" id="stage">
 
-  <!-- Background with Campus building, night lighting, and dust canvas -->
   <div class="bg" aria-hidden="true">
-    <div class="bg-campus"></div>
-    <div class="bg-vignette"></div>
-    <div class="bg-glow-spot"></div>
+    <div class="bg-base"></div>
+    <div class="rays"></div>
+    <div class="glow a"></div>
+    <div class="glow b"></div>
+    <div class="beam l"></div>
+    <div class="beam r"></div>
+    <div class="sweep"></div>
+    <div class="floorline"></div>
     <canvas id="dust"></canvas>
-    <canvas id="fireflies"></canvas>
+    <div class="vig"></div>
     <div class="grain"></div>
   </div>
 
   <div class="frame" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
 
-  <!-- Top HUD with minimal circular controls -->
   <div class="hud">
     <div class="status" id="status" hidden style="display:none !important;">
       <i></i><span id="statusText"></span>
     </div>
     <div class="tools">
-      <div class="tool" title="Ambient Atmosphere Active">
-        <div class="sound-bars"><span></span><span></span><span></span></div>
-      </div>
       <button class="tool" id="soundBtn" type="button" aria-pressed="true" title="Sound on / off">
         <svg id="soundIcon" viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M17 8.5a5 5 0 0 1 0 7"/></svg>
       </button>
@@ -956,73 +847,33 @@ body.previewing .stage, body.previewing #live { top: var(--flag-h); }
     </div>
   </div>
 
-  <!-- Stage Center Composition -->
   <div class="stage-core">
-    
-    <!-- Institutional Logos & Names -->
     <header class="masthead">
       <div class="seals">
-        <img src="assets/images/iiit.png" width="302" height="302" alt="Dr. SPM IIIT Naya Raipur">
-        <img src="assets/images/nss_logo.png" width="738" height="738" alt="National Service Scheme">
+        <img src="assets/images/iiit.png" width="302" height="302"
+             alt="Dr. SPM IIIT Naya Raipur">
+        <img src="assets/images/nss_logo.png" width="738" height="738"
+             alt="National Service Scheme">
       </div>
       <p class="org">Dr. SPM IIIT Naya Raipur</p>
       <p class="org-sub">National Service Scheme</p>
     </header>
 
-    <!-- Title Block with Swirling Gold Light Ribbon -->
     <div class="titleblock">
-      <!-- Decorative Golden Ribbon Light Swirl SVG -->
-      <div class="title-swirl" aria-hidden="true">
-        <svg viewBox="0 0 600 240" fill="none">
-          <defs>
-            <linearGradient id="swirlGold" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stop-color="#E8A63C" stop-opacity="0"/>
-              <stop offset="25%" stop-color="#FFE8A3" stop-opacity="0.9"/>
-              <stop offset="60%" stop-color="#E8A63C" stop-opacity="0.95"/>
-              <stop offset="100%" stop-color="#FFE8A3" stop-opacity="0"/>
-            </linearGradient>
-            <linearGradient id="swirlGold2" x1="100%" y1="100%" x2="0%" y2="0%">
-              <stop offset="0%" stop-color="#E8A63C" stop-opacity="0"/>
-              <stop offset="40%" stop-color="#FFF0BA" stop-opacity="0.8"/>
-              <stop offset="100%" stop-color="#E8A63C" stop-opacity="0"/>
-            </linearGradient>
-            <filter id="swirlGlow" x="-20%" y="-20%" width="140%" height="140%">
-              <feGaussianBlur stdDeviation="3" result="blur"/>
-              <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
-            </filter>
-          </defs>
-          <path d="M40,140 C110,40 210,35 320,75 C430,115 520,95 565,55" stroke="url(#swirlGold)" stroke-width="2.5" filter="url(#swirlGlow)"/>
-          <path d="M110,165 C220,55 360,45 540,105" stroke="url(#swirlGold2)" stroke-width="1.6"/>
-          <!-- Star sparkle on the light arc -->
-          <path d="M190,68 L192,62 L194,68 L200,70 L194,72 L192,78 L190,72 L184,70 Z" fill="#FFFFFF"/>
-          <circle cx="192" cy="70" r="1.5" fill="#FFF"/>
-        </svg>
-      </div>
-
-      <p class="title-script">The</p>
+      <p class="kicker">Website Inauguration</p>
       <h1 id="title">
+        <span class="ln3d"><span class="ln">The</span></span>
         <span class="ln3d"><span class="ln">Unveiling</span></span>
       </h1>
-      <div class="title-lensflare" aria-hidden="true"></div>
+      <p class="lede" style="margin-top:clamp(6px,1vh,11px)">The official NSS IIIT-NR website goes live in front of you — built by students, for the work they do.</p>
     </div>
 
-    <!-- Dedication Plaque (Matching Reference Frame) -->
-    <div class="dedicate-wrap">
-      <p class="dedicate-lbl">To be inaugurated by</p>
-      <div class="dedicate">
-        <span class="dedicate-corner tl"></span>
-        <span class="dedicate-corner tr"></span>
-        <span class="dedicate-corner bl"></span>
-        <span class="dedicate-corner br"></span>
-        <span class="plaque-lotus top">🪷</span>
-        <span class="plaque-lotus bot">🪷</span>
-
-        <p class="who"><span id="dirName" contenteditable="true" spellcheck="false" role="textbox" aria-label="Name of the inaugurating guest">Prof. (Dr.) Om Prakash Vyas</span></p>
-        <p class="role">Director, IIIT Naya Raipur</p>
-      </div>
+    <div class="dedicate">
+      <p class="lbl">To be inaugurated by</p>
+      <p class="who"><span id="dirName" contenteditable="true" spellcheck="false" role="textbox" aria-label="Name of the inaugurating guest">Prof. (Dr.) Om Prakash Vyas</span></p>
+      <p class="role">Director, IIIT Naya Raipur</p>
     </div>
 
-    <!-- Ceremonial Red Silk Ribbon & Lotus Bow -->
     <div class="ribbon" id="ribbon">
       <div class="rib">
         <span class="half half-l"><i class="cloth"></i><i class="braid t"></i><i class="braid b"></i><i class="gloss"></i></span>
@@ -1030,11 +881,9 @@ body.previewing .stage, body.previewing #live { top: var(--flag-h); }
         <i class="sever" id="sever" aria-hidden="true"></i>
       </div>
 
-      <!-- Photorealistic Red Satin Bow with Gold Lotus Medallion + SVG Fallback -->
       <div class="bow" id="bow">
         <span class="bow-in" aria-hidden="true">
-          <img src="assets/images/ceremonial_bow.png" class="bow-img" id="bowImg" alt="Ceremonial Bow" draggable="false" onerror="this.style.display='none'; var f=document.getElementById('bowSvgFallback'); if(f) f.style.display='block';" />
-          <svg id="bowSvgFallback" class="bow-img" viewBox="0 0 240 200" style="display:none; width:100%; height:100%; overflow:visible; filter:drop-shadow(0 14px 22px rgba(0,0,0,0.75));">
+          <svg viewBox="0 0 240 200">
             <defs>
               <linearGradient id="ribG" x1="0" y1="0" x2="0" y2="1">
                 <stop offset="0" stop-color="#F08A62"/><stop offset=".42" stop-color="#C04A2E"/><stop offset="1" stop-color="#7A2A17"/>
@@ -1070,10 +919,19 @@ body.previewing .stage, body.previewing #live { top: var(--flag-h); }
 
       <div class="trail" id="trail" aria-hidden="true"></div>
 
-      <!-- Ceremonial Scissors (Targeted by GSAP) -->
       <div class="scissors" id="scissors" aria-hidden="true">
+        <!-- A scissors is two rigid pieces, each a blade AND its handle and
+             finger-ring, hinged on the screw. The previous drawing put both
+             the blades and both rings on the same side of the pivot, so it
+             read as a knot. Here the blades reach left and the rings sit on
+             the far side, and the pivot is the centre of the viewBox — which
+             is the centre of the ribbon, so the blades close on the cut. -->
         <svg viewBox="0 0 240 150">
           <defs>
+            <!-- Polished steel. Each ramp runs dark-to-bright toward the side
+                 that carries the cutting edge, and the two blades use mirrored
+                 ramps, so they catch the light in opposition the way a real
+                 pair does when it opens. -->
             <linearGradient id="scSteelTop" x1="0" y1="0" x2="0" y2="1">
               <stop offset="0" stop-color="#8C8676"/><stop offset=".3" stop-color="#CFC9B8"/>
               <stop offset=".64" stop-color="#F4F1E6"/><stop offset=".88" stop-color="#FFFFFF"/>
@@ -1085,10 +943,10 @@ body.previewing .stage, body.previewing #live { top: var(--flag-h); }
               <stop offset="1" stop-color="#D8D2C1"/>
             </linearGradient>
             <linearGradient id="scGripTop" x1="0" y1="1" x2="0" y2="0">
-              <stop offset="0" stop-color="#8A5A14"/><stop offset=".25" stop-color="#D49528"/><stop offset=".5" stop-color="#FFF0BA"/><stop offset=".75" stop-color="#E8A63C"/><stop offset="1" stop-color="#6B4208"/>
+              <stop offset="0" stop-color="#948E7D"/><stop offset="1" stop-color="#EDE9DC"/>
             </linearGradient>
             <linearGradient id="scGripBot" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0" stop-color="#8A5A14"/><stop offset=".25" stop-color="#D49528"/><stop offset=".5" stop-color="#FFF0BA"/><stop offset=".75" stop-color="#E8A63C"/><stop offset="1" stop-color="#6B4208"/>
+              <stop offset="0" stop-color="#948E7D"/><stop offset="1" stop-color="#EDE9DC"/>
             </linearGradient>
             <radialGradient id="scScrew" cx=".36" cy=".3" r=".85">
               <stop offset="0" stop-color="#FFFFFF"/><stop offset=".45" stop-color="#DACFA6"/>
@@ -1098,11 +956,13 @@ body.previewing .stage, body.previewing #live { top: var(--flag-h); }
 
           <g id="bladeTop">
             <path d="M117 61 Q 58 24, 7 29 L 118 79 Z" fill="url(#scSteelTop)"/>
+            <!-- the ground bevel that runs down to the cutting edge -->
             <path d="M113 68 Q 60 33, 22 34 L 117 76 Z" fill="rgba(255,255,255,.5)"/>
             <path d="M7 29 L118 79" stroke="#FFFFFF" stroke-width="1.2" fill="none" opacity=".85"/>
             <path d="M117 61 Q 58 24, 7 29" stroke="rgba(58,54,42,.5)" stroke-width="1.4" fill="none"/>
             <path d="M120 57 C 152 46, 174 39, 188 33 L 194 47 C 178 54, 154 63, 122 76 Z"
                   fill="url(#scGripTop)" stroke="rgba(58,54,42,.45)" stroke-width="1.2" stroke-linejoin="round"/>
+            <!-- finger ring: a true hole, cut with evenodd so the ribbon shows through -->
             <path fill-rule="evenodd" fill="url(#scGripTop)" stroke="rgba(58,54,42,.45)" stroke-width="1.2"
               d="M204 13 A 17 17 0 1 0 204 47 A 17 17 0 1 0 204 13 Z
                  M204 22 A 8 8 0 1 0 204 38 A 8 8 0 1 0 204 22 Z"/>
@@ -1124,6 +984,9 @@ body.previewing .stage, body.previewing #live { top: var(--flag-h); }
                   fill="none" stroke-linecap="round"/>
           </g>
 
+          <!-- The screw sits on top of both blades and marks the pivot the
+               rotation uses — svgOrigin pins the hinge to (120,75), so it has
+               to stay exactly here. -->
           <circle cx="120" cy="75" r="8.5" fill="url(#scScrew)" stroke="rgba(58,48,20,.6)" stroke-width="1"/>
           <path d="M114.5 75 L125.5 75" stroke="rgba(70,58,22,.7)" stroke-width="1.6" stroke-linecap="round"/>
           <circle cx="117.5" cy="72.4" r="1.8" fill="rgba(255,255,255,.9)"/>
@@ -1131,56 +994,29 @@ body.previewing .stage, body.previewing #live { top: var(--flag-h); }
       </div>
     </div>
 
-    <!-- The Glowing Golden Pill Button (Matching Reference Image) -->
     <div class="controls" id="controls">
       <button class="cut" id="cutBtn" type="button">
         <i class="cut-ribbon" aria-hidden="true"></i>
         <span class="cut-ico" aria-hidden="true">
           <svg viewBox="0 0 24 24"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M20 4L8.12 15.88"/><path d="M14.47 14.48L20 20"/><path d="M8.12 8.12L12 12"/></svg>
         </span>
-        <span class="cut-label">Cut the ribbon</span>
-        <span class="cut-arrow" aria-hidden="true">→</span>
+        <span>Cut the ribbon</span>
       </button>
-      <div class="controls-reflection" aria-hidden="true"></div>
     </div>
-
   </div>
 
-  <!-- Bottom Milestone Stepper Rail (Matching Reference Image) -->
   <div class="foot">
-    <p class="side" id="footDate">2 OCTOBER 2026</p>
-    
+    <p class="side" id="footDate"></p>
     <div class="railwrap">
       <i class="rail-track" aria-hidden="true"></i>
       <i class="rail-fill" id="railFill" aria-hidden="true"></i>
       <ul class="rail" id="rail">
-        <li class="done">
-          <span class="rail-icon-wrap" title="Lighting of the lamp">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 2c1 3 3 5 3 7a3 3 0 0 1-6 0c0-2 2-4 3-7z"/><path d="M4 17h16c-1 3-4 5-8 5s-7-2-8-5z"/><path d="M2 17h20"/></svg>
-          </span>
-          <span class="rail-lbl">Lighting of the Lamp</span>
-        </li>
-        <li class="done">
-          <span class="rail-icon-wrap" title="Welcome address">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-          </span>
-          <span class="rail-lbl">Welcome Address</span>
-        </li>
-        <li class="now" id="railCut">
-          <span class="rail-icon-wrap" title="Ribbon cutting">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M20 4L8.12 15.88"/><path d="M14.47 14.48L20 20"/><path d="M8.12 8.12L12 12"/></svg>
-          </span>
-          <span class="rail-lbl">Ribbon Cutting</span>
-        </li>
-        <li id="railLive">
-          <span class="rail-icon-wrap" title="Website goes live">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
-          </span>
-          <span class="rail-lbl">Website Goes Live</span>
-        </li>
+        <li class="done"><i></i><span>Lighting of the lamp</span></li>
+        <li class="done"><i></i><span>Welcome address</span></li>
+        <li class="now" id="railCut"><i></i><span>Ribbon cutting</span></li>
+        <li id="railLive"><i></i><span>Website goes live</span></li>
       </ul>
     </div>
-
     <p class="side">IIIT Naya Raipur</p>
   </div>
 </div>
@@ -1193,6 +1029,7 @@ body.previewing .stage, body.previewing #live { top: var(--flag-h); }
 
 <p class="sr" id="announce" role="status" aria-live="polite"></p>
 
+<!-- ===================== ALREADY HELD ===================== -->
 <div class="notice" id="notice">
   <h2 id="noticeTitle">This ceremony has already been held.</h2>
   <p id="noticeText">The website itself is live below.</p>
@@ -1202,105 +1039,6 @@ body.previewing .stage, body.previewing #live { top: var(--flag-h); }
 </div>
 
 <script src="vendor/gsap.min.js"></script>
-
-<!-- Living Garden Animations (Fireflies & Leaves) -->
-<script>
-    document.addEventListener('mousemove', (e) => {
-        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-        const x = (e.clientX / window.innerWidth - 0.5) * 20;
-        const y = (e.clientY / window.innerHeight - 0.5) * 20;
-        document.documentElement.style.setProperty('--mouseX', `${x}px`);
-        document.documentElement.style.setProperty('--mouseY', `${y}px`);
-    });
-
-    const canvas = document.getElementById('fireflies');
-    const ctx = canvas.getContext('2d');
-    let fireflies = [];
-    let mx = window.innerWidth / 2;
-    let my = window.innerHeight / 2;
-
-    function resizeCanvas() {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-    }
-    window.addEventListener('resize', resizeCanvas);
-    resizeCanvas();
-
-    document.addEventListener('mousemove', (e) => { mx = e.clientX; my = e.clientY; });
-
-    class Firefly {
-        constructor() {
-            this.x = Math.random() * canvas.width;
-            this.y = Math.random() * canvas.height;
-            this.vx = (Math.random() - 0.5) * 1;
-            this.vy = (Math.random() - 0.5) * 1;
-            this.size = Math.random() * 2 + 1;
-            this.life = Math.random();
-            this.lifeSpeed = Math.random() * 0.02 + 0.01;
-            this.color = `rgba(232, 166, 60, `;
-        }
-        update() {
-            const dx = mx - this.x;
-            const dy = my - this.y;
-            const dist = Math.sqrt(dx*dx + dy*dy);
-            if (dist < 300) {
-                this.vx += (dx / dist) * 0.02;
-                this.vy += (dy / dist) * 0.02;
-            }
-            this.vx *= 0.98;
-            this.vy *= 0.98;
-            this.vx += (Math.random() - 0.5) * 0.1;
-            this.vy += (Math.random() - 0.5) * 0.1;
-            this.x += this.vx;
-            this.y += this.vy;
-            if (this.x < 0) this.x = canvas.width;
-            if (this.x > canvas.width) this.x = 0;
-            if (this.y < 0) this.y = canvas.height;
-            if (this.y > canvas.height) this.y = 0;
-            this.life += this.lifeSpeed;
-        }
-        draw() {
-            const alpha = Math.abs(Math.sin(this.life)) * 0.8;
-            ctx.beginPath();
-            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-            ctx.fillStyle = this.color + alpha + ')';
-            ctx.shadowBlur = 10;
-            ctx.shadowColor = 'rgba(232, 166, 60, 0.8)';
-            ctx.fill();
-        }
-    }
-    for (let i = 0; i < 50; i++) fireflies.push(new Firefly());
-
-    function animateFireflies() {
-        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        fireflies.forEach(f => { f.update(); f.draw(); });
-        requestAnimationFrame(animateFireflies);
-    }
-    animateFireflies();
-
-    function createLeaf() {
-        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-        const leaf = document.createElement('div');
-        leaf.classList.add('floating-leaf');
-        leaf.style.left = Math.random() * 100 + 'vw';
-        leaf.style.top = '-50px';
-        const duration = Math.random() * 10 + 10;
-        const delay = Math.random() * 5;
-        const rotation = Math.random() * 360;
-        leaf.style.animation = `floatDown ${duration}s ${delay}s linear forwards, sway ${duration/2}s ${delay}s ease-in-out infinite alternate`;
-        leaf.style.transform = `rotate(${rotation}deg)`;
-        const colors = ['var(--leaf)', 'var(--moss)', 'var(--pine-3)'];
-        leaf.style.background = colors[Math.floor(Math.random() * colors.length)];
-        document.body.appendChild(leaf);
-        setTimeout(() => { leaf.remove(); }, (duration + delay) * 1000);
-    }
-    setInterval(createLeaf, 3000);
-    createLeaf();
-</script>
-
-
-<!-- Ceremony Logic (GSAP, Sound, API, State) -->
 <script>
 (function () {
   'use strict';
@@ -1325,7 +1063,7 @@ body.previewing .stage, body.previewing #live { top: var(--flag-h); }
      cosmetic: the frame loads index.html by relative path, so it works on any
      machine, any port, and from a file:// double-click. Put the deployed
      address here when the site has one. */
-  var SITE_ADDRESS = 'nss.iiitnr.ac.in';
+  var SITE_ADDRESS = 'index.html';
 
   /* ======================================================================
      THE DIRECTOR'S NAME — click it, type, and it is remembered
@@ -1588,7 +1326,7 @@ body.previewing .stage, body.previewing #live { top: var(--flag-h); }
     var cv = $('#petals');
     var ctx = cv.getContext('2d');
     var w = 0, h = 0, ps = [], running = false;
-    var COLORS = ['#FF6584', '#FF85A0', '#D91E47', '#E8A63C', '#FBDC9E', '#F7F4EA', '#C98A2C', '#FFE8D6'];
+    var COLORS = ['#E8A63C', '#FBDC9E', '#E8764F', '#C04A2E', '#F7F4EA', '#C98A2C', '#D9563A'];
 
     function resize() {
       w = cv.clientWidth; h = cv.clientHeight;
@@ -1849,18 +1587,22 @@ body.previewing .stage, body.previewing #live { top: var(--flag-h); }
     function fit() {
       var w = body.clientWidth, h = body.clientHeight;
       if (!w || !h) return;
-      var baseH = 600;
-      var fx = Math.min(w / 1000, h / baseH);
-      var fw = Math.round(w / fx);
-      var fh = Math.round(h / fx);
+      // Never ask the site for a viewport shorter than the 600px minimum its
+      // hero declares — below that its own layout starts fighting back.
+      var fh = Math.max(600, Math.round(h / (w / 1440)));
+      // Scale by whichever axis is the tighter fit, not by width alone. On a
+      // tall box that is still the width, as before. On a short one — a laptop
+      // window, a projector — honouring the 600px floor by itself would make
+      // the viewport taller than the box and push the headline off the bottom
+      // edge, which is the fault this sizing exists to prevent. Fitting both
+      // axes keeps the whole hero inside the frame; at worst the page is a
+      // little narrower than the box.
+      var fx = Math.min(w / 1440, h / fh);
       f.style.setProperty('--fx', fx.toFixed(4));
-      f.style.setProperty('--fw', fw + 'px');
       f.style.setProperty('--fh', fh + 'px');
     }
     fit();
     window.addEventListener('resize', fit);
-    setTimeout(fit, 500);
-    setTimeout(fit, 1300);
     // Held out of the document on purpose. An iframe with no src still paints an
     // opaque box over the stand-in underneath, so a frame that is never loaded
     // would sit there as a black rectangle — which is exactly how a preview
@@ -1874,31 +1616,16 @@ body.previewing .stage, body.previewing #live { top: var(--flag-h); }
     $('#shotUrl').textContent = SITE_ADDRESS;
   }
 
-  // Point the reveal frame at the real homepage.
+  // Point the reveal frame at the real homepage. Called only from the branch of
+  // persist() where the server has already answered 200: by then the mode has
+  // moved to permanent and /index.html is the homepage again, so there is no
+  // redirect left to race. The stand-in is dropped on the frame's load event and
+  // not before, so the box is never empty and never shows a page mid-load.
   function loadLiveFrame() {
     if (!liveFrame) return;
-    if (liveFrame.parentNode) return; // Prevent duplicate append
-
     liveFrame.addEventListener('load', function () {
       var mock = $('#shotMock');
       if (mock) mock.remove();
-
-      // Dismiss preloader inside the iframe immediately so the website hero is visible right away!
-      try {
-        var win = liveFrame.contentWindow;
-        var doc = win && win.document;
-        if (doc) {
-          var p = doc.getElementById('preloader');
-          if (p) p.style.display = 'none';
-          doc.documentElement.classList.remove('is-loading');
-          if (win.__plFailsafe) clearTimeout(win.__plFailsafe);
-          var s = doc.createElement('style');
-          s.textContent = '::-webkit-scrollbar { width: 0px; height: 0px; background: transparent; } html { scrollbar-width: none; }';
-          doc.head.appendChild(s);
-        }
-      } catch (e) {}
-
-      fit();
       walkFrame();
     });
     $('#shotBody').appendChild(liveFrame);
@@ -1931,15 +1658,11 @@ body.previewing .stage, body.previewing #live { top: var(--flag-h); }
     try { win = liveFrame.contentWindow; } catch (e) { return; }
     if (!win || reduce) return;
 
-    var SPEED = 160;   // page pixels per second
-    var DWELL = 3500;  // ms resting at the bottom, and again at the top
+    var SPEED = 170;   // page pixels per second
+    var DWELL = 2600;  // ms resting at the bottom, and again at the top
     var YIELD = 5000;  // ms of standing aside once a hand has taken over
 
-    // Ensure it starts positioned firmly at the top of the homepage hero
-    try { win.scrollTo(0, 0); } catch (e) {}
-
-    // Give 5 seconds of initial dwell at the top so the first page (hero) is clearly visible and readable!
-    var dir = 1, mine = 0, last = 0, until = performance.now() + 5000, land = false;
+    var dir = 1, mine = 0, last = 0, until = 0, land = false;
 
     function reach() {
       var doc = win.document;
@@ -1953,9 +1676,6 @@ body.previewing .stage, body.previewing #live { top: var(--flag-h); }
       if (!last) { last = now; return; }
       var dt = Math.min(80, now - last) / 1000;
       last = now;
-
-      // Hold on the first page / hero section during initial dwell
-      if (now < until) return;
 
       var span = reach();
       if (span < 60) return;          // short page, or not laid out yet
@@ -1997,6 +1717,9 @@ body.previewing .stage, body.previewing #live { top: var(--flag-h); }
     // the committed path fills them in and a reviewer reads them back.
     $('#liveCredLive').hidden = true;
     $('#liveCredPreview').hidden = false;
+    // "Enter the website" points at index.html, which during the ceremony is
+    // redirected straight back to this page — so on a preview it leads nowhere
+    // but here. There is nothing to enter yet.
     $('#enter').hidden = true;
     announce.textContent = 'Preview only. The website is not live yet.';
   }
@@ -2043,7 +1766,6 @@ body.previewing .stage, body.previewing #live { top: var(--flag-h); }
       loadLiveFrame();
     }).catch(function (err) {
       var denied = err && (err.status === 401 || err.status === 403);
-      var mount = loadLiveFrame;
 
       if (denied) {
         // Expected for every visitor who is not the admin.
@@ -2052,7 +1774,6 @@ body.previewing .stage, body.previewing #live { top: var(--flag-h); }
         $('#liveNote').textContent =
           'This was a preview playback. No state was changed — the inauguration is still to be held by the NSS admin.';
         setStatus('Preview · nothing was changed');
-        mount();
         return;
       }
 
@@ -2063,7 +1784,6 @@ body.previewing .stage, body.previewing #live { top: var(--flag-h); }
         ? 'Not recorded — ' + err.message + '. The ceremony has not been held.'
         : 'Not recorded. The ceremony has not been held.';
       setStatus('Not recorded');
-      mount();
     });
   }
 
@@ -2276,7 +1996,5 @@ body.previewing .stage, body.previewing #live { top: var(--flag-h); }
   })();
 })();
 </script>
-
 </body>
 </html>
-

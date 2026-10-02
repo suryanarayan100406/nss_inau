@@ -265,10 +265,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 .bg { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
 .bg-campus {
   position: absolute; inset: 0;
-  background-color: #070C09;
-  background-image:
-    radial-gradient(circle at 50% 40%, rgba(24, 38, 32, 0.8) 0%, rgba(7, 12, 9, 0.95) 100%),
-    url('assets/images/inauguration_bg.jpg');
+  background-image: url('assets/images/inauguration_bg.jpg');
   background-size: cover; background-position: center bottom;
   filter: brightness(0.92) contrast(1.05);
 }
@@ -555,12 +552,8 @@ h1 .ch { display: inline-block; will-change: transform; }
 /* Photorealistic Woven Crimson Silk Ribbon with Metallic Gold Piping */
 .cloth {
   position: absolute; inset: 0; display: block;
-  background-color: #8E1B14;
-  background-image:
-    linear-gradient(180deg, rgba(232,166,60,0.95) 0%, rgba(232,166,60,0.6) 4%, transparent 5%, transparent 95%, rgba(232,166,60,0.6) 96%, rgba(232,166,60,0.95) 100%),
-    linear-gradient(180deg, #A82218 0%, #8E1B14 50%, #68100A 100%),
-    url('assets/images/ceremonial_ribbon.jpg');
-  background-size: 100% 100%, 100% 100%, 100% 100%;
+  background-image: url('assets/images/ceremonial_ribbon.jpg');
+  background-size: 100% 100%;
   background-position: center center;
   background-repeat: no-repeat;
   box-shadow: inset 0 2px 3px rgba(255,255,255,0.4), inset 0 -2px 4px rgba(0,0,0,0.45);
@@ -1030,41 +1023,10 @@ body.previewing .stage, body.previewing #live { top: var(--flag-h); }
         <i class="sever" id="sever" aria-hidden="true"></i>
       </div>
 
-      <!-- Photorealistic Red Satin Bow with Gold Lotus Medallion + SVG Fallback -->
+            <!-- Photorealistic Red Satin Bow with Gold Lotus Medallion -->
       <div class="bow" id="bow">
         <span class="bow-in" aria-hidden="true">
-          <img src="assets/images/ceremonial_bow.png" class="bow-img" id="bowImg" alt="Ceremonial Bow" draggable="false" onerror="this.style.display='none'; var f=document.getElementById('bowSvgFallback'); if(f) f.style.display='block';" />
-          <svg id="bowSvgFallback" class="bow-img" viewBox="0 0 240 200" style="display:none; width:100%; height:100%; overflow:visible; filter:drop-shadow(0 14px 22px rgba(0,0,0,0.75));">
-            <defs>
-              <linearGradient id="ribG" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0" stop-color="#F08A62"/><stop offset=".42" stop-color="#C04A2E"/><stop offset="1" stop-color="#7A2A17"/>
-              </linearGradient>
-              <linearGradient id="ribG2" x1="0" y1="0" x2="1" y2="1">
-                <stop offset="0" stop-color="#D9563A"/><stop offset="1" stop-color="#8E3220"/>
-              </linearGradient>
-              <radialGradient id="knotG" cx="0.34" cy="0.28" r="0.9">
-                <stop offset="0" stop-color="#F5926B"/><stop offset=".5" stop-color="#C04A2E"/><stop offset="1" stop-color="#6E2414"/>
-              </radialGradient>
-            </defs>
-
-            <path d="M104 100 L76 180 L96 167 L110 190 L130 102 Z" fill="url(#ribG2)" stroke="rgba(232,166,60,.45)" stroke-width="1"/>
-            <path d="M136 100 L172 178 L152 167 L140 192 L118 102 Z" fill="url(#ribG2)" stroke="rgba(232,166,60,.45)" stroke-width="1"/>
-            <path d="M108 104 L88 170" stroke="rgba(255,240,214,.26)" stroke-width="2.6" fill="none" stroke-linecap="round"/>
-            <path d="M132 104 L160 170" stroke="rgba(255,240,214,.2)" stroke-width="2.6" fill="none" stroke-linecap="round"/>
-
-            <path d="M120 96 C 70 26, 8 34, 16 88 C 22 132, 84 134, 120 96 Z" fill="url(#ribG)" stroke="rgba(232,166,60,.45)" stroke-width="1"/>
-            <path d="M120 96 C 170 26, 232 34, 224 88 C 218 132, 156 134, 120 96 Z" fill="url(#ribG)" stroke="rgba(232,166,60,.45)" stroke-width="1"/>
-            <path d="M116 94 C 80 56, 40 56, 34 86 C 30 112, 72 118, 116 94 Z" fill="rgba(52,16,8,.34)"/>
-            <path d="M124 94 C 160 56, 200 56, 206 86 C 210 112, 168 118, 124 94 Z" fill="rgba(52,16,8,.34)"/>
-            <path d="M118 92 C 74 30, 16 38, 20 84" fill="none" stroke="rgba(255,242,220,.46)" stroke-width="2.8" stroke-linecap="round"/>
-            <path d="M122 92 C 166 30, 224 38, 220 84" fill="none" stroke="rgba(255,242,220,.36)" stroke-width="2.8" stroke-linecap="round"/>
-
-            <ellipse cx="120" cy="98" rx="21" ry="23" fill="url(#knotG)" stroke="rgba(232,166,60,.55)" stroke-width="1.3"/>
-            <ellipse cx="120" cy="98" rx="21" ry="23" fill="none" stroke="rgba(255,242,220,.18)" stroke-width="5"/>
-            <ellipse cx="113" cy="89" rx="6" ry="7" fill="rgba(255,242,220,.26)"/>
-            <circle cx="120" cy="98" r="6.5" fill="#E8A63C" stroke="#8B5F15" stroke-width="1.2"/>
-            <circle cx="118" cy="96" r="2" fill="rgba(255,255,255,.8)"/>
-          </svg>
+          <img src="assets/images/ceremonial_bow.png" class="bow-img" alt="Ceremonial Bow" draggable="false" />
         </span>
       </div>
 
