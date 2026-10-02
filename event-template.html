@@ -46,19 +46,84 @@
   }
 </style>
 <style id="evp-css">
-  .brand-logos{ display:flex; align-items:center; }
-  .emblem-iiit{ width:32px; height:32px; flex:none; display:flex; align-items:center; justify-content:center;
-    margin-left:10px; padding-left:10px; border-left:1px solid rgba(245,241,228,.18); }
-  .emblem-iiit img{ width:100%; height:100%; object-fit:contain; }
-  @media (max-width:480px){ .emblem-iiit{ display:none; } }   /* keep the phone header from feeling crowded */
-
   .evp-links{ margin-top:24px; display:flex; gap:12px; flex-wrap:wrap; }
   .evp-ig-link{ display:inline-flex; align-items:center; gap:8px; }
 
-  .evp-meta{ list-style:none; margin:22px 0 0; padding:0; display:flex; flex-wrap:wrap; gap:18px 32px; }
-  .evp-meta li{ display:flex; flex-direction:column; gap:2px; }
-  .evp-meta .k{ font-size:.72rem; text-transform:uppercase; letter-spacing:.05em; color:rgba(245,241,228,.55); }
-  .evp-meta .v{ font-size:1rem; font-weight:600; color:var(--bone,#F5F1E4); }
+  /* Hero Scrim: subtle darkening on left and bottom to ensure text readability over photo */
+  .evp-hero .hero-scrim{
+    background:
+      linear-gradient(to top, rgba(10,15,11,0.96) 0%, rgba(10,15,11,0.65) 45%, rgba(10,15,11,0.2) 75%, rgba(10,15,11,0.5) 100%),
+      linear-gradient(to right, rgba(10,15,11,0.72) 0%, transparent 60%);
+  }
+
+  /* Hero Layout: ensure proper clearance and prevent clipping */
+  section.hero.evp-hero{
+    min-height: 100vh;
+    min-height: 100svh;
+    height: auto;
+    display: flex;
+    align-items: flex-end;
+    padding-top: clamp(84px, 12vh, 120px);
+    padding-bottom: clamp(52px, 8vh, 88px);
+    box-sizing: border-box;
+  }
+  section.hero.evp-hero .hero-content{
+    width: 100%;
+    padding: 0 clamp(20px, 5vw, 60px);
+  }
+
+  /* Event Details Metadata: matching the clean editorial design of the other event pages */
+  .evp-meta{
+    list-style: none;
+    margin: 24px 0 28px;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px clamp(24px, 4vw, 44px);
+  }
+  .evp-meta li{ display: flex; flex-direction: column; gap: 3px; }
+  .evp-meta .k{
+    font-size: .72rem;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    color: var(--marigold, #E8A63C);
+    font-weight: 600;
+  }
+  .evp-meta .v{
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--bone, #F5F1E4);
+  }
+
+  /* Actions & Scroll Hint: clean spacing and right-aligning Scroll to prevent overlap with buttons */
+  .evp-hero .hero-actions{
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    align-items: center;
+    position: relative;
+    z-index: 3;
+  }
+  .evp-hero .hero-scroll-hint{
+    left: auto;
+    right: clamp(20px, 5vw, 60px);
+    bottom: 24px;
+    z-index: 3;
+  }
+
+  @media (max-width: 820px){
+    section.hero.evp-hero{
+      align-items: flex-start;
+      padding-top: 108px;
+      padding-bottom: 48px;
+    }
+    section.hero.evp-hero .hero-content{
+      padding-top: 10px;
+    }
+    .evp-hero .hero-scroll-hint{ display: none !important; }
+    .evp-meta{ gap: 14px 28px; margin: 18px 0 22px; }
+    .evp-hero .hero-actions{ gap: 16px; }
+  }
 
   .evp-gallery{ padding:clamp(48px,8vh,96px) 0; }
   .evp-grid{ margin-top:28px; display:grid; grid-template-columns:repeat(auto-fill, minmax(250px,1fr)); gap:18px; }
